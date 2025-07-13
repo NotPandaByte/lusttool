@@ -675,10 +675,11 @@ export default function Dashboard() {
     }
   };
 
-  const handleFileUpload = async (file: File, type: 'image' | 'model') => {
+  const handleFileUpload = async (file: File, type: 'image' | 'model', category: string = 'staff') => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', type);
+    formData.append('category', category);
 
     try {
       const response = await fetch('/api/upload', {
@@ -690,8 +691,8 @@ export default function Dashboard() {
         const data = await response.json();
         return data.url;
       } else {
-        const error = await response.text();
-        alert(`Upload error: ${error}`);
+        const errorResponse = await response.json();
+        alert(`Upload error: ${errorResponse.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Upload error:', error);

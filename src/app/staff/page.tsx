@@ -442,7 +442,7 @@ function StaffModal({ staff, isOpen, onClose, onViewAvatar }: {
                   className="mb-8"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-white font-bold text-xl">VRChat Avatar Preview</h2>
+                    <h2 className="text-white font-bold text-xl">VRChat Avatar Available</h2>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -450,9 +450,10 @@ function StaffModal({ staff, isOpen, onClose, onViewAvatar }: {
                       className="bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 hover:border-purple-500/50 text-purple-300 px-4 py-2 rounded-xl font-medium transition-all flex items-center space-x-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
-                      <span>View Fullscreen</span>
+                      <span>View 3D Avatar</span>
                     </motion.button>
                   </div>
                   <motion.div 
@@ -462,10 +463,29 @@ function StaffModal({ staff, isOpen, onClose, onViewAvatar }: {
                     className="space-y-4"
                   >
                     <div className="h-80 bg-black/30 rounded-xl border border-white/20 flex items-center justify-center overflow-hidden shadow-inner">
-                      <VRChatAvatarViewer avatarUrl={staff.vrchatAvatar} size="medium" />
+                      <div className="text-center">
+                        <div className="w-20 h-20 mx-auto mb-4 bg-purple-500/20 rounded-full flex items-center justify-center">
+                          <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                          </svg>
+                        </div>
+                        <h3 className="text-white font-semibold mb-2">VRChat Avatar Available</h3>
+                        <p className="text-zinc-400 text-sm mb-4">Click "View 3D Avatar" to load the interactive model</p>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => onViewAvatar(staff)}
+                          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mx-auto"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span>Load 3D Model</span>
+                        </motion.button>
+                      </div>
                     </div>
                     <p className="text-zinc-400 text-sm text-center font-medium">
-                      Interactive 3D avatar preview • Click "View Fullscreen" for better view
+                      Large 3D model available • Click to load interactive preview
                     </p>
                   </motion.div>
                 </motion.div>
@@ -700,7 +720,7 @@ export default function StaffPage() {
                 </div>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
         </div>
       </div>
 

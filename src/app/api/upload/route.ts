@@ -1,90 +1,109 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { PrismaClient, UserRole } from '@/generated/prisma';
-import { authOptions } from '../auth/[...nextauth]/route';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
-const prisma = new PrismaClient();
-
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    // Check if user is authenticated
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Not authenticated' },
-        { status: 401 }
-      );
-    }
-
-    // Check if user has authenticated role
-    const currentUser = await prisma.user.findUnique({
-      where: { email: session.user.email! }
-    });
-
-    if (!currentUser || currentUser.role !== UserRole.AUTHENTICATED) {
-      return NextResponse.json(
-        { error: 'Insufficient permissions' },
-        { status: 403 }
-      );
-    }
-
-    const data = await request.formData();
-    const file: File | null = data.get('file') as unknown as File;
-    const type: string = data.get('type') as string; // 'image' or 'model'
+    const formData = await req.formData();
+    const file = formData.get('file') as File;
+    const type = formData.get('type') as string;
+    const category = formData.get('category') as string || 'general'; // staff, gallery, general
 
     if (!file) {
-      return NextResponse.json(
-        { error: 'No file uploaded' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+    }
+
+    // File size validation (50MB limit)
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) {
+      return NextResponse.json({ 
+        error: `File too large. Maximum size is 50MB. Your file is ${(file.size / (1024 * 1024)).toFixed(1)}MB.` 
+      }, { status: 400 });
     }
 
     // Validate file type
-    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    const allowedModelTypes = ['model/gltf-binary', 'model/gltf+json', 'application/octet-stream'];
+    const allowedTypes = {
+      image: {
+        mimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+      },
+      model: {
+        mimeTypes: ['application/octet-stream', 'model/gltf-binary', 'model/gltf+json'],
+        extensions: ['.fbx', '.glb', '.gltf']
+      }
+    };
+
+    const fileType = allowedTypes[type as keyof typeof allowedTypes];
+    if (!fileType) {
+      return NextResponse.json({ 
+        error: 'Invalid type. Must be either "image" or "model".' 
+      }, { status: 400 });
+    }
+
+    const fileName = file.name.toLowerCase();
+    const isValidType = fileType.mimeTypes.includes(file.type) || 
+                       fileType.extensions.some(ext => fileName.endsWith(ext));
+
+    if (!isValidType) {
+      return NextResponse.json({ 
+        error: `Invalid file type. Expected ${type} file with extensions: ${fileType.extensions.join(', ')}` 
+      }, { status: 400 });
+    }
+
+    // Create directory based on type and category
+    let uploadDir = '';
+    if (type === 'image') {
+      uploadDir = category === 'staff' ? 'staff-images' : 'uploads/images';
+    } else if (type === 'model') {
+      uploadDir = category === 'staff' ? 'staff-models' : 'uploads/models';
+    }
+
+    const dirPath = path.join(process.cwd(), 'public', uploadDir);
     
-    if (type === 'image' && !allowedImageTypes.includes(file.type)) {
-      return NextResponse.json(
-        { error: 'Invalid image file type' },
-        { status: 400 }
-      );
+    try {
+      await mkdir(dirPath, { recursive: true });
+    } catch (error) {
+      console.error('Error creating directory:', error);
+      return NextResponse.json({ 
+        error: 'Failed to create upload directory' 
+      }, { status: 500 });
     }
 
-    if (type === 'model' && !allowedModelTypes.includes(file.type) && !file.name.endsWith('.glb') && !file.name.endsWith('.gltf') && !file.name.endsWith('.fbx')) {
-      return NextResponse.json(
-        { error: 'Invalid model file type. Only GLB, GLTF, and FBX files are supported' },
-        { status: 400 }
-      );
-    }
-
-    // Create unique filename
+    // Generate unique filename
     const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name}`;
-    const uploadDir = type === 'image' ? 'staff-images' : 'staff-models';
-    const filepath = join(process.cwd(), 'public', uploadDir, filename);
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const filename = `${timestamp}-${sanitizedName}`;
+    const filepath = path.join(dirPath, filename);
 
     // Convert file to buffer and save
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
+    try {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      await writeFile(filepath, buffer);
+    } catch (error) {
+      console.error('Error saving file:', error);
+      return NextResponse.json({ 
+        error: 'Failed to save file' 
+      }, { status: 500 });
+    }
 
     // Return the public URL
     const publicUrl = `/${uploadDir}/${filename}`;
 
-    return NextResponse.json({
-      message: 'File uploaded successfully',
+    return NextResponse.json({ 
       url: publicUrl,
-      filename: filename
-    });
+      filename: filename,
+      originalName: file.name,
+      size: file.size,
+      type: file.type,
+      uploadDir: uploadDir
+    }, { status: 200 });
 
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ 
+      error: 'Failed to upload file. Please try again.' 
+    }, { status: 500 });
   }
 } 

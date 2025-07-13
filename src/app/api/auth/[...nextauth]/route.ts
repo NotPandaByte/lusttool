@@ -19,7 +19,7 @@ export const authOptions = {
       // Add user role to session
       if (session.user) {
         session.user.id = user.id;
-        session.user.role = (user as any).role || "WAITING";
+        session.user.role = (user as { role?: "WAITING" | "AUTHENTICATED" }).role || "WAITING";
       }
       return session;
     },
