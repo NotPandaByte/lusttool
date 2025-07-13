@@ -34,19 +34,54 @@ export default function Header() {
       {/* Floating Hamburger Icon */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, ...smoothTransition }}
+        animate={{ 
+          opacity: 1, 
+          scale: 1,
+          // Add subtle breathing animation to catch attention
+          boxShadow: [
+            "0 0 20px rgba(255, 255, 255, 0.1)",
+            "0 0 30px rgba(255, 255, 255, 0.2)",
+            "0 0 20px rgba(255, 255, 255, 0.1)"
+          ]
+        }}
+        transition={{ 
+          delay: 0.5, 
+          ...smoothTransition,
+          boxShadow: {
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }
+        }}
+        whileHover={{
+          scale: 1.05,
+          boxShadow: "0 0 40px rgba(255, 255, 255, 0.3)"
+        }}
         onClick={toggleMenu}
-        className="fixed top-6 right-6 z-[70] w-12 h-12 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full focus-ring scale-hover flex items-center justify-center group border border-white/20"
+        className="fixed top-8 right-8 z-[70] 
+                   w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20
+                   bg-white/15 backdrop-blur-md hover:bg-white/25 
+                   rounded-full focus-ring scale-hover 
+                   flex items-center justify-center group 
+                   border-2 border-white/30 hover:border-white/50
+                   shadow-lg shadow-black/20
+                   transition-all duration-300 ease-out
+                   cursor-pointer
+                   before:absolute before:inset-0 before:rounded-full 
+                   before:bg-gradient-to-br before:from-white/5 before:to-transparent
+                   after:absolute after:inset-0 after:rounded-full 
+                   after:bg-gradient-to-t after:from-black/10 after:to-transparent"
       >
-        <div className="relative w-5 h-5">
+        <div className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 z-10">
           <motion.span
             animate={isMenuOpen ? 
               { rotate: 45, y: 0, opacity: 1 } : 
-              { rotate: 0, y: -6, opacity: 1 }
+              { rotate: 0, y: -8, opacity: 1 }
             }
             transition={smoothTransition}
-            className="absolute left-0 top-1/2 w-5 h-0.5 bg-white transform -translate-y-1/2 origin-center"
+            className="absolute left-0 top-1/2 w-full h-0.5 sm:h-1 
+                       bg-white transform -translate-y-1/2 origin-center
+                       shadow-sm shadow-black/30 rounded-full"
           />
           <motion.span
             animate={isMenuOpen ? 
@@ -54,17 +89,24 @@ export default function Header() {
               { opacity: 1, scale: 1 }
             }
             transition={smoothTransition}
-            className="absolute left-0 top-1/2 w-5 h-0.5 bg-white transform -translate-y-1/2"
+            className="absolute left-0 top-1/2 w-full h-0.5 sm:h-1 
+                       bg-white transform -translate-y-1/2
+                       shadow-sm shadow-black/30 rounded-full"
           />
           <motion.span
             animate={isMenuOpen ? 
               { rotate: -45, y: 0, opacity: 1 } : 
-              { rotate: 0, y: 6, opacity: 1 }
+              { rotate: 0, y: 8, opacity: 1 }
             }
             transition={smoothTransition}
-            className="absolute left-0 top-1/2 w-5 h-0.5 bg-white transform -translate-y-1/2 origin-center"
+            className="absolute left-0 top-1/2 w-full h-0.5 sm:h-1 
+                       bg-white transform -translate-y-1/2 origin-center
+                       shadow-sm shadow-black/30 rounded-full"
           />
         </div>
+        
+        {/* Larger invisible clickable area for easier interaction */}
+        <div className="absolute inset-0 -m-4 rounded-full" />
       </motion.button>
 
       {/* Full Screen Modal */}

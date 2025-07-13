@@ -36,8 +36,12 @@ model Staff {
   id          String   @id @default(cuid())
   name        String
   position    String
+  rank        String?
   description String?
   image       String?
+  banner      String?
+  vrchatAvatar String?
+  links       String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

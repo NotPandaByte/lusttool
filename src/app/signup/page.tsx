@@ -34,20 +34,9 @@ export default function SignupPage() {
           transition={{ delay: 0.1, ...gentleTransition }}
           className="text-center"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Join{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              LustTool
-            </span>
+          <h2 className="text-4xl font-bold text-white mb-8">
+            Staff Login
           </h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, ...gentleTransition }}
-            className="text-zinc-400"
-          >
-            Sign in with your Google account to get started
-          </motion.p>
         </motion.div>
         
         <motion.div
@@ -94,23 +83,6 @@ export default function SignupPage() {
             </motion.svg>
             <span className="z-10">Continue with Google</span>
           </motion.button>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, ...gentleTransition }}
-            className="mt-8 text-center"
-          >
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                <span className="text-yellow-300 font-medium text-sm">Account Status</span>
-              </div>
-              <p className="text-yellow-200/80 text-sm leading-relaxed">
-                New users start with <span className="font-medium text-yellow-300">waiting</span> status and require staff approval
-              </p>
-            </div>
-          </motion.div>
         </motion.div>
       </motion.div>
     </div>

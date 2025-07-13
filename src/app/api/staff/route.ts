@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, position, description, image, order } = await request.json();
+    const { name, position, rank, description, image, banner, vrchatAvatar, links, order } = await request.json();
 
     // Basic validation
     if (!name || !position) {
@@ -68,8 +68,12 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         position,
+        rank,
         description,
         image,
+        banner,
+        vrchatAvatar,
+        links,
         order: order || 0
       }
     });
