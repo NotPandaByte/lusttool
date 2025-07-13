@@ -113,8 +113,111 @@ function getLinkIcon(url: string) {
   );
 }
 
+// Avatar Modal Component
+function AvatarModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: boolean; onClose: () => void }) {
+  if (!staff || !staff.vrchatAvatar) return null;
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 40 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300, duration: 0.6 }}
+            className="bg-zinc-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/10 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={onClose}
+              className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </motion.button>
+
+            {/* Header */}
+            <div className="p-8 pb-4 border-b border-white/10">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center overflow-hidden shadow-lg border border-white/20">
+                  {staff.image ? (
+                    <img 
+                      src={staff.image} 
+                      alt={staff.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-white font-bold text-2xl">
+                      {staff.name.charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-white font-bold text-3xl">{staff.name}</h1>
+                  <p className="text-indigo-400 font-semibold text-lg">{staff.position}</p>
+                  {staff.rank && (
+                    <div className="inline-flex items-center px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30 mt-2">
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      VRChat Avatar
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Avatar Viewer */}
+            <div className="p-8">
+              <div className="h-[500px] bg-black/30 rounded-2xl border border-white/20 flex items-center justify-center overflow-hidden shadow-inner">
+                <VRChatAvatarViewer avatarUrl={staff.vrchatAvatar} size="large" />
+              </div>
+              <div className="mt-6 text-center">
+                <p className="text-zinc-400 text-sm font-medium mb-2">
+                  Interactive 3D avatar preview • Use mouse to rotate
+                </p>
+                <div className="flex justify-center space-x-4 text-xs text-zinc-500">
+                  <span className="flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                    </svg>
+                    Drag to rotate
+                  </span>
+                  <span className="flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Auto-rotate
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // Modal Component
-function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: boolean; onClose: () => void }) {
+function StaffModal({ staff, isOpen, onClose, onViewAvatar }: { 
+  staff: Staff | null; 
+  isOpen: boolean; 
+  onClose: () => void;
+  onViewAvatar: (staff: Staff) => void;
+}) {
   if (!staff) return null;
 
   return (
@@ -125,7 +228,7 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 backdrop-blur-md z-40 flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div
@@ -133,9 +236,37 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 40 }}
             transition={{ type: "spring", damping: 25, stiffness: 300, duration: 0.6 }}
-            className="bg-zinc-900 rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/10"
+            className="bg-zinc-900 rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/10 relative"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={onClose}
+              className="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </motion.button>
+
+            {/* VRChat Avatar Button */}
+            {staff.vrchatAvatar && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => onViewAvatar(staff)}
+                className="absolute top-6 right-20 bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 hover:border-purple-500/50 text-purple-300 px-4 py-2 rounded-xl font-medium transition-all flex items-center space-x-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span>View Avatar</span>
+              </motion.button>
+            )}
+
             {/* Banner Section */}
             {staff.banner && (
               <div className="relative h-48 md:h-64 overflow-hidden rounded-t-3xl">
@@ -148,7 +279,7 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
               </div>
             )}
             
-            <div className={staff.banner ? "p-8 -mt-16 relative z-10" : "p-8"}>
+            <div className={staff.banner ? "p-8 -mt-16 relative z-10" : "p-8 pt-16"}>
               {/* Header Section */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -156,20 +287,8 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
                 transition={{ delay: 0.1, duration: 0.5 }}
                 className="relative mb-8"
               >
-                {/* Close Button */}
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={onClose}
-                  className="absolute top-0 right-0 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </motion.button>
-                
                 {/* Staff Header */}
-                <div className="flex items-start justify-between pr-16">
+                <div className="flex items-start justify-between pr-32">
                   <div className="flex items-start space-x-6">
                     {/* Profile Image */}
                     <motion.div 
@@ -201,19 +320,36 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
                       <h1 className="text-white font-bold text-3xl mb-2">{staff.name}</h1>
                       <p className="text-indigo-400 font-semibold text-xl mb-3">{staff.position}</p>
                       
-                      {staff.rank && (
-                        <motion.div 
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.4, duration: 0.5 }}
-                          className="inline-flex items-center px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm font-semibold border border-amber-500/30"
-                        >
-                          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                          {staff.rank}
-                        </motion.div>
-                      )}
+                      <div className="flex items-center space-x-3">
+                        {staff.rank && (
+                          <motion.div 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.4, duration: 0.5 }}
+                            className="inline-flex items-center px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm font-semibold border border-amber-500/30"
+                          >
+                            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {staff.rank}
+                          </motion.div>
+                        )}
+                        
+                        {staff.vrchatAvatar && (
+                          <motion.div 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.5, duration: 0.5 }}
+                            className="inline-flex items-center px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30"
+                          >
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            VRChat Avatar
+                          </motion.div>
+                        )}
+                      </div>
                     </motion.div>
                   </div>
 
@@ -297,7 +433,7 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
                 </motion.div>
               )}
 
-              {/* VRChat Avatar Section */}
+              {/* VRChat Avatar Preview Section */}
               {staff.vrchatAvatar && (
                 <motion.div 
                   initial={{ opacity: 0, y: 30 }}
@@ -305,7 +441,20 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
                   transition={{ delay: 0.6, duration: 0.6 }}
                   className="mb-8"
                 >
-                  <h2 className="text-white font-bold text-xl mb-4">VRChat Avatar</h2>
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-white font-bold text-xl">VRChat Avatar Preview</h2>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => onViewAvatar(staff)}
+                      className="bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 hover:border-purple-500/50 text-purple-300 px-4 py-2 rounded-xl font-medium transition-all flex items-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      </svg>
+                      <span>View Fullscreen</span>
+                    </motion.button>
+                  </div>
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -313,16 +462,14 @@ function StaffModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: b
                     className="space-y-4"
                   >
                     <div className="h-80 bg-black/30 rounded-xl border border-white/20 flex items-center justify-center overflow-hidden shadow-inner">
-                      <VRChatAvatarViewer avatarUrl={staff.vrchatAvatar} />
+                      <VRChatAvatarViewer avatarUrl={staff.vrchatAvatar} size="medium" />
                     </div>
                     <p className="text-zinc-400 text-sm text-center font-medium">
-                      Interactive 3D avatar preview
+                      Interactive 3D avatar preview • Click "View Fullscreen" for better view
                     </p>
                   </motion.div>
                 </motion.div>
               )}
-
-
             </div>
           </motion.div>
         </motion.div>
@@ -336,6 +483,8 @@ export default function StaffPage() {
   const [loading, setLoading] = useState(true);
   const [selectedStaff, setSelectedStaff] = useState<Staff | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [avatarViewerStaff, setAvatarViewerStaff] = useState<Staff | null>(null);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
   const fetchStaff = async () => {
     try {
@@ -363,6 +512,16 @@ export default function StaffPage() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedStaff(null);
+  };
+
+  const openAvatarViewer = (member: Staff) => {
+    setAvatarViewerStaff(member);
+    setIsAvatarModalOpen(true);
+  };
+
+  const closeAvatarViewer = () => {
+    setIsAvatarModalOpen(false);
+    setAvatarViewerStaff(null);
   };
 
   if (loading) {
@@ -493,40 +652,46 @@ export default function StaffPage() {
                         {/* Content Area */}
                         <div className="px-6 pb-4">
                           <div className="flex items-center justify-between mb-3">
-                            {member.rank && (
-                              <div className="inline-flex items-center px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-md text-xs font-medium border border-yellow-500/30">
-                                {member.rank}
-                              </div>
-                            )}
-                            
                             <div className="flex items-center space-x-2">
-                              {member.image && (
-                                <div className="w-2 h-2 bg-green-400 rounded-full" title="Has profile image"></div>
+                              {member.rank && (
+                                <div className="inline-flex items-center px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-md text-xs font-medium border border-yellow-500/30">
+                                  {member.rank}
+                                </div>
                               )}
                               {member.vrchatAvatar && (
-                                <div className="w-2 h-2 bg-purple-400 rounded-full" title="Has VRChat avatar"></div>
+                                <div className="inline-flex items-center px-2 py-1 bg-purple-500/20 text-purple-300 rounded-md text-xs font-medium border border-purple-500/30">
+                                  <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                  </svg>
+                                  Avatar
+                                </div>
                               )}
                             </div>
+                            
+                            {member.vrchatAvatar && (
+                              <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openAvatarViewer(member);
+                                }}
+                                className="w-8 h-8 bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 hover:border-purple-500/50 text-purple-300 rounded-lg flex items-center justify-center transition-all"
+                                title="View VRChat Avatar"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                              </motion.button>
+                            )}
                           </div>
-
-                          {/* VRChat Avatar Preview */}
-                          {member.vrchatAvatar && (
-                            <div className="mb-4">
-                              <div className="h-32 bg-black/30 rounded-xl border border-white/10 flex items-center justify-center">
-                                <VRChatAvatarViewer avatarUrl={member.vrchatAvatar} size="small" />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Description Preview */}
+                          
                           {member.description && (
-                            <motion.p 
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              className="text-zinc-300 text-sm leading-relaxed line-clamp-3"
-                            >
+                            <p className="text-zinc-400 text-sm line-clamp-2 leading-relaxed">
                               {member.description}
-                            </motion.p>
+                            </p>
                           )}
                         </div>
                       </div>
@@ -535,12 +700,24 @@ export default function StaffPage() {
                 </div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Modal */}
-      <StaffModal staff={selectedStaff} isOpen={isModalOpen} onClose={closeModal} />
+      {/* Main Staff Modal */}
+      <StaffModal 
+        staff={selectedStaff} 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+        onViewAvatar={openAvatarViewer}
+      />
+
+      {/* Separate Avatar Viewer Modal */}
+      <AvatarModal 
+        staff={avatarViewerStaff} 
+        isOpen={isAvatarModalOpen} 
+        onClose={closeAvatarViewer} 
+      />
     </>
   );
 } 
