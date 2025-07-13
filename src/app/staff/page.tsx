@@ -471,7 +471,7 @@ function StaffModal({ staff, isOpen, onClose, onViewAvatar }: {
                         </div>
                         <h3 className="text-white font-semibold mb-2">VRChat Avatar Available</h3>
                         <p className="text-zinc-400 text-sm mb-4">Click &quot;View 3D Avatar&quot; to load the interactive model</p>
-                        <motion.button
+     g                   <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => onViewAvatar(staff)}
