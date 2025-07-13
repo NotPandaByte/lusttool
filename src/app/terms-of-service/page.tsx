@@ -27,7 +27,7 @@ export default function TermsOfServicePage() {
             <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>
             <p className="text-zinc-300">
               LustTool is a platform that allows users to create and manage staff profiles, upload images and 3D models, 
-              and display team information. The service is provided "as is" without warranty of any kind.
+              and display team information. The service is provided &quot;as is&quot; without warranty of any kind.
             </p>
           </section>
 
@@ -99,7 +99,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">9. Disclaimer</h2>
             <p className="text-zinc-300">
-              The information on this service is provided on an "as is" basis. To the fullest extent permitted by law, 
+              The information on this service is provided on an &quot;as is&quot; basis. To the fullest extent permitted by law, 
               LustTool excludes all representations, warranties, conditions, and all other terms which might otherwise have effect 
               by statute or common law.
             </p>

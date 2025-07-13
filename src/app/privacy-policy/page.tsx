@@ -70,7 +70,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">6. Third-Party Services</h2>
             <p className="text-zinc-300">
-              Our authentication system uses Google OAuth. Please review Google's Privacy Policy to understand how they handle your data during the authentication process.
+              Our authentication system uses Google OAuth. Please review Google&apos;s Privacy Policy to understand how they handle your data during the authentication process.
             </p>
           </section>
 
@@ -89,7 +89,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">8. Children's Privacy</h2>
+            <h2 className="text-2xl font-semibold mb-4">8. Children&apos;s Privacy</h2>
             <p className="text-zinc-300">
               Our service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
             </p>
