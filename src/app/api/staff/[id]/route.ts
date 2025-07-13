@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // PUT - Update staff member
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check if user is authenticated
@@ -33,7 +33,7 @@ export async function PUT(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const { name, position, rank, description, image, banner, vrchatAvatar, links, order } = await request.json();
 
     // Basic validation
@@ -77,7 +77,7 @@ export async function PUT(
 // DELETE - Remove staff member
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check if user is authenticated
@@ -102,7 +102,7 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Delete staff member
     await prisma.staff.delete({
