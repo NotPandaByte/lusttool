@@ -1,6 +1,19 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
+import { motion, Transition } from 'framer-motion';
+
+const smoothTransition: Transition = {
+  type: "spring",
+  stiffness: 400,
+  damping: 30
+};
+
+const gentleTransition: Transition = {
+  type: "spring",
+  stiffness: 300,
+  damping: 25
+};
 
 export default function SignupPage() {
   const handleGoogleSignIn = () => {
@@ -8,23 +21,60 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Join LustTool
+    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 pt-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={gentleTransition}
+        className="max-w-md w-full space-y-8"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, ...gentleTransition }}
+          className="text-center"
+        >
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Join{' '}
+            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              LustTool
+            </span>
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Sign up with your Google account to get started
-          </p>
-        </div>
-        
-        <div className="mt-8">
-          <button
-            onClick={handleGoogleSignIn}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-md border-gray-300"
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, ...gentleTransition }}
+            className="text-zinc-400"
           >
-            <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+            Sign in with your Google account to get started
+          </motion.p>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, ...gentleTransition }}
+          className="glass rounded-2xl p-8 glow-subtle"
+        >
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, ...gentleTransition }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleGoogleSignIn}
+            className="group relative w-full flex justify-center items-center py-4 px-6 border border-white/20 text-white bg-white/5 hover:bg-white/10 rounded-xl animate-smooth font-medium btn-hover"
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100"
+              transition={{ duration: 0.3 }}
+            />
+            <motion.svg 
+              className="w-6 h-6 mr-3 z-10" 
+              viewBox="0 0 24 24"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={smoothTransition}
+            >
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -41,17 +91,28 @@ export default function SignupPage() {
                 fill="#EA4335"
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
-            </svg>
-            Sign up with Google
-          </button>
+            </motion.svg>
+            <span className="z-10">Continue with Google</span>
+          </motion.button>
           
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              New users start with <span className="font-medium text-blue-600">waiting</span> status
-            </p>
-          </div>
-        </div>
-      </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, ...gentleTransition }}
+            className="mt-8 text-center"
+          >
+            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <span className="text-yellow-300 font-medium text-sm">Account Status</span>
+              </div>
+              <p className="text-yellow-200/80 text-sm leading-relaxed">
+                New users start with <span className="font-medium text-yellow-300">waiting</span> status and require staff approval
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 } 
