@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VRChat Nightclub Web App
+
+This is a modern web application for a VRChat nightclub, featuring a beautiful landing page, staff directory, event gallery, and interactive features. The app is built with Next.js, React, and Framer Motion for smooth animations.
+
+## Features
+
+- **Landing Page:** Eye-catching hero, club features, and hours.
+- **Staff Directory:** Meet the team, view bios, and see VRChat avatars.
+- **Event Gallery:** Browse event pictures.
+- **Staff Login:** Secure dashboard for staff members.
+- **Responsive Design:** Works great on desktop and mobile.
+- **Animated UI:** Smooth transitions and interactive elements.
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository:**
+   ```
+   git clone https://github.com/yourusername/vrchat-nightclub.git
+   cd vrchat-nightclub
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies:**
+   ```
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Run the development server:**
+   ```
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Open in your browser:**
+   ```
+   http://localhost:3000
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+- `src/app/` - Main application pages and components
+- `src/app/components/` - Reusable UI components
+- `src/app/staff/` - Staff directory and staff pages
+- `src/app/protected/` - Protected staff dashboard
 
-To learn more about Next.js, take a look at the following resources:
+## Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Add staff:** Edit the staff data or connect to your own API.
+- **Change images:** Replace images in the public folder or update URLs.
+- **Edit hours/features:** Update text in the landing page.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technologies Used
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
+
+---
+
+*This README gives a simple overview of the project, how to run it, and how to customize it. Update details as needed for your deployment!*
