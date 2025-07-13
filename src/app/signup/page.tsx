@@ -39,16 +39,60 @@ export default function SignupPage() {
           </h2>
         </motion.div>
         
+        {/* App Description */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, ...gentleTransition }}
+          className="mb-8"
+        >
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <h3 className="text-xl font-semibold text-white mb-3">About This Application</h3>
+            <p className="text-zinc-300 mb-4 text-sm">
+              This is a web application for managing VRChat nightclub staff and content. Users can authenticate with Google to access features like staff profile management, image uploads, and admin tools.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <h4 className="text-white font-medium mb-2">Why We Need Your Data:</h4>
+                <ul className="text-zinc-400 space-y-1">
+                  <li>• Google account info for secure authentication</li>
+                  <li>• Profile creation and management</li>
+                  <li>• Admin access control and permissions</li>
+                  <li>• Session management and security</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-white font-medium mb-2">App Features:</h4>
+                <ul className="text-zinc-400 space-y-1">
+                  <li>• Staff directory and profile management</li>
+                  <li>• Image upload and gallery system</li>
+                  <li>• VRChat avatar 3D model viewer</li>
+                  <li>• Protected admin dashboard</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <p className="text-zinc-400 text-sm">
+                <strong>Privacy:</strong> We only collect necessary data for app functionality. See our{' '}
+                <a href="/privacy-policy" className="text-white hover:text-zinc-300 underline">
+                  Privacy Policy
+                </a>{' '}
+                for details.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+        
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, ...gentleTransition }}
+          transition={{ delay: 0.25, ...gentleTransition }}
           className="glass rounded-2xl p-8 glow-subtle"
         >
           <motion.button
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, ...gentleTransition }}
+            transition={{ delay: 0.35, ...gentleTransition }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleGoogleSignIn}
