@@ -50,16 +50,19 @@ function Model({ url }: { url: string }) {
     return () => clearTimeout(timeout);
   }, [isLoading]);
 
+  // Always call hooks unconditionally
+  const fbxModel = useFBX(fileExtension === 'fbx' ? url : '');
+  const gltfModel = useGLTF(fileExtension !== 'fbx' ? url : '');
+
   try {
-    if (fileExtension === 'fbx') {
-      model = useFBX(url);
+    if (fileExtension === 'fbx' && fbxModel) {
+      model = fbxModel;
       if (model && isLoading) {
         setIsLoading(false);
       }
-    } else {
+    } else if (gltfModel) {
       // Default to GLTF for .glb and .gltf files
-      const gltf = useGLTF(url);
-      model = gltf.scene;
+      model = gltfModel.scene;
       if (model && isLoading) {
         setIsLoading(false);
       }
@@ -71,7 +74,7 @@ function Model({ url }: { url: string }) {
     model = null;
   }
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current && !error) {
       meshRef.current.rotation.y += 0.005; // Slower rotation to reduce performance impact
     }

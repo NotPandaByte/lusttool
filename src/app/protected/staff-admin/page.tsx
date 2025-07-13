@@ -22,6 +22,19 @@ export default function StaffAdminPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    position: '',
+    rank: '',
+    description: '',
+    image: '',
+    vrchatAvatar: '',
+    order: 0
+  });
+
+  useEffect(() => {
+    fetchStaff();
+  }, []);
 
   // Check authentication
   if (status === 'loading') {
@@ -42,20 +55,6 @@ export default function StaffAdminPage() {
       </div>
     );
   }
-
-  const [formData, setFormData] = useState({
-    name: '',
-    position: '',
-    rank: '',
-    description: '',
-    image: '',
-    vrchatAvatar: '',
-    order: 0
-  });
-
-  useEffect(() => {
-    fetchStaff();
-  }, []);
 
   const fetchStaff = async () => {
     try {

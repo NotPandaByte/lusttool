@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ImageItem {
@@ -19,7 +19,6 @@ interface ImageGalleryProps {
 
 export function ImageGallery({ onImageSelect, category = 'general', maxSelection = 1 }: ImageGalleryProps) {
   const [images, setImages] = useState<ImageItem[]>([]);
-  const [loading, setLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
 
@@ -176,7 +175,7 @@ export function ImageGallery({ onImageSelect, category = 'general', maxSelection
         </AnimatePresence>
       </div>
 
-      {images.length === 0 && !loading && (
+      {images.length === 0 && !uploading && (
         <div className="text-center py-8">
           <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
