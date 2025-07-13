@@ -1,6 +1,8 @@
 // This is a simple footer component for the site.
 // It is styled to match the dark theme and uses Tailwind CSS utility classes.
 
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="w-full bg-black/80 border-t border-white/10 py-8 mt-24">
@@ -8,6 +10,22 @@ export default function Footer() {
         <div className="text-white/80 text-center md:text-left text-sm">
           © {new Date().getFullYear()} Laced in Lust. All rights reserved.
         </div>
+        
+        <div className="flex items-center gap-6 text-sm">
+          <Link 
+            href="/privacy-policy" 
+            className="text-white/60 hover:text-white transition-colors"
+          >
+            Privacy Policy
+          </Link>
+          <Link 
+            href="/terms-of-service" 
+            className="text-white/60 hover:text-white transition-colors"
+          >
+            Terms of Service
+          </Link>
+        </div>
+        
         <div className="flex items-center gap-6">
           <a
             href="https://twitter.com/"
