@@ -23,13 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Add favicon link here */}
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
           <Header />
           <main>
-        {children}
+            {children}
           </main>
           <Footer />
         </SessionProvider>
