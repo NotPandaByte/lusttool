@@ -1044,7 +1044,7 @@ export default function Dashboard() {
                                   formData.append('image', file);
                                   
                                   try {
-                                    const response = await fetch('/api/upload?type=avatar', {
+                                    const response = await fetch('/api/upload', {
                                       method: 'POST',
                                       body: formData
                                     });
@@ -1086,7 +1086,7 @@ export default function Dashboard() {
                                   formData.append('image', file);
                                   
                                   try {
-                                    const response = await fetch('/api/upload?type=banner', {
+                                    const response = await fetch('/api/upload', {
                                       method: 'POST',
                                       body: formData
                                     });
@@ -1441,7 +1441,7 @@ export default function Dashboard() {
                                 formData.append('image', file);
                                 
                                 try {
-                                  const response = await fetch('/api/upload?type=avatar', {
+                                  const response = await fetch('/api/upload', {
                                     method: 'POST',
                                     body: formData
                                   });
@@ -1479,7 +1479,7 @@ export default function Dashboard() {
                                 formData.append('image', file);
                                 
                                 try {
-                                  const response = await fetch('/api/upload?type=banner', {
+                                  const response = await fetch('/api/upload', {
                                     method: 'POST',
                                     body: formData
                                   });

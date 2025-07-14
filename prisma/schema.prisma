@@ -39,13 +39,27 @@ model Staff {
   position    String?
   rank        String?
   description String?
-  image       String?
-  banner      String?
+  imageId     String?
+  bannerId    String?
   vrchatAvatar String?
   links       String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  image       Image?   @relation("StaffImage", fields: [imageId], references: [id])
+  banner      Image?   @relation("StaffBanner", fields: [bannerId], references: [id])
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  data        Bytes
+  mimetype    String
+  filename    String?
+  createdAt   DateTime @default(now())
+  
+  staffImages   Staff[] @relation("StaffImage")
+  staffBanners  Staff[] @relation("StaffBanner")
 }
 
 model Account {

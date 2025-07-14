@@ -44,6 +44,16 @@ export async function PUT(
       );
     }
 
+    // Extract image IDs from URLs if they are in the format /api/image/{id}
+    const extractImageId = (url: string) => {
+      if (!url) return null;
+      const match = url.match(/\/api\/image\/([a-zA-Z0-9-]+)/);
+      return match ? match[1] : null;
+    };
+
+    const imageId = extractImageId(image);
+    const bannerId = extractImageId(banner);
+
     // Update staff member
     const staff = await prisma.staff.update({
       where: { id },
@@ -51,17 +61,30 @@ export async function PUT(
         name,
         rank,
         description,
-        image,
-        banner,
+        imageId,
+        bannerId,
         vrchatAvatar,
         links,
         order: order || 0
+      },
+      include: {
+        image: true,
+        banner: true
       }
     });
 
+    // Convert to frontend-compatible format
+    const staffWithUrls = {
+      ...staff,
+      image: staff.imageId ? `/api/image/${staff.imageId}` : null,
+      banner: staff.bannerId ? `/api/image/${staff.bannerId}` : null,
+      imageId: undefined,
+      bannerId: undefined
+    };
+
     return NextResponse.json({
       message: 'Staff member updated successfully',
-      staff
+      staff: staffWithUrls
     });
 
   } catch (error) {

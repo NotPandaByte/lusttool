@@ -329,7 +329,7 @@ export default function StaffAdminPage() {
                             formDataUpload.append('image', file);
                             
                             try {
-                              const response = await fetch('/api/upload?type=avatar', {
+                              const response = await fetch('/api/upload', {
                                 method: 'POST',
                                 body: formDataUpload
                               });
@@ -367,7 +367,7 @@ export default function StaffAdminPage() {
                             formDataUpload.append('image', file);
                             
                             try {
-                              const response = await fetch('/api/upload?type=banner', {
+                              const response = await fetch('/api/upload', {
                                 method: 'POST',
                                 body: formDataUpload
                               });
