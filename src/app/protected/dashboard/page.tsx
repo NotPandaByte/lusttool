@@ -704,8 +704,6 @@ export default function Dashboard() {
     
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('type', type);
-    formData.append('category', category);
 
     try {
       const response = await fetch('/api/upload', {

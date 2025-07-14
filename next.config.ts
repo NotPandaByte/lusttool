@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     // Enable static image optimization
     unoptimized: false,
   },
+
   // Ensure static files are properly served
   async headers() {
     return [

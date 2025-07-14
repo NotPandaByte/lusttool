@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ImageDebugger } from '../components/ImageDebugger';
+import UploadTest from '../components/UploadTest';
 
 export default function TestImagesPage() {
   const [testImages, setTestImages] = useState<string[]>([]);
@@ -27,6 +28,10 @@ export default function TestImagesPage() {
     <div className="min-h-screen bg-black p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Image Loading Test</h1>
+        
+        <div className="mb-8">
+          <UploadTest />
+        </div>
         
         <div className="bg-zinc-900 rounded-xl p-6 border border-white/10 mb-8">
           <h2 className="text-xl font-semibold text-white mb-4">Add Test Image</h2>

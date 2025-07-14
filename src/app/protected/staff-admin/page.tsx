@@ -75,7 +75,6 @@ export default function StaffAdminPage() {
   const handleFileUpload = async (file: File, type: 'image' | 'model') => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('type', type);
 
     try {
       const response = await fetch('/api/upload', {

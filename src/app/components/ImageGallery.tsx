@@ -26,8 +26,6 @@ export function ImageGallery({ onImageSelect, category = 'general', maxSelection
     setUploading(true);
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('type', 'image');
-    formData.append('category', category);
 
     try {
       const response = await fetch('/api/upload', {
