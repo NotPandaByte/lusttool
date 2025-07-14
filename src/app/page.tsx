@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Transition } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const gentleTransition: Transition = {
@@ -11,51 +10,27 @@ const gentleTransition: Transition = {
   damping: 25
 };
 
-const heroImages = [
-  '/VRChat_2025-07-10_21-50-14.341_3840x2160.png',
-  '/VRChat_2025-07-10_21-19-00.631_3840x2160.png',
-  '/VRChat_2025-07-10_21-06-34.174_3840x2160.png',
-  '/VRChat_2025-07-10_21-06-26.953_3840x2160.png'
-];
-
 export default function Home() {
-  const [currentImage, setCurrentImage] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="min-h-screen bg-black">
 
       {/* Hero Section */}
       <div className="relative h-screen overflow-hidden">
-        {/* Dynamic Background Images */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
+        {/* Video Background */}
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
           >
-            <Image
-              src={heroImages[currentImage]}
-              alt="Club atmosphere"
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
-            <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/30 via-transparent to-slate-900/30" />
-          </motion.div>
-        </AnimatePresence>
+            <source src="/background.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/30 via-transparent to-slate-900/30" />
+        </div>
 
-
-        
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center max-w-6xl mx-auto px-4">
@@ -103,26 +78,7 @@ export default function Home() {
                 </motion.button>
               </Link>
             </motion.div>
-
-
           </div>
-        </div>
-
-        {/* Image Navigation Dots */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-          {heroImages.map((_, index) => (
-            <motion.button
-              key={index}
-              onClick={() => setCurrentImage(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentImage 
-                  ? 'bg-white shadow-lg shadow-white/50' 
-                  : 'bg-white/40 hover:bg-white/60'
-              }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-            />
-          ))}
         </div>
       </div>
 
