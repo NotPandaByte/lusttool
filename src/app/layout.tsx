@@ -5,7 +5,8 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { SessionProvider } from "next-auth/react";
-import { Metadata } from 'next';
+
+// Removed the Metadata import and export to avoid issues with localhost and ECMAScript errors.
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,25 +17,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: 'Laced in Lust',
-  description: 'Where passion meets rhythm, and every night becomes an unforgettable experience',
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
-  openGraph: {
-    title: 'Laced in Lust',
-    description: 'Where passion meets rhythm, and every night becomes an unforgettable experience',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Laced in Lust',
-    description: 'Where passion meets rhythm, and every night becomes an unforgettable experience',
-  },
-};
 
 export default function RootLayout({
   children,
