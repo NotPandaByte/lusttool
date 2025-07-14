@@ -21,7 +21,7 @@ export default withAuth(
       // AUTHENTICATED users can't access waiting room or access denied pages
       if (token.role === 'AUTHENTICATED') {
         if (pathname === '/waiting-room' || pathname === '/access-denied') {
-          return NextResponse.redirect(new URL('/protected/dashboard', req.url));
+          return NextResponse.redirect(new URL('/protected/overview', req.url));
         }
       }
     }
