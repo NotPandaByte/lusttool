@@ -2,22 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Allow images from your own domain and common external sources
-    domains: ['localhost'],
-    // Allow images from any source (for development - be more restrictive in production)
+    // Production-ready image configuration
+    domains: [], // Remove localhost - will be set by environment
+    // Allow images from any HTTPS source (you can restrict this further in production)
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-      },
-      {
         protocol: 'https',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: '**', // Allow any HTTPS domain (you can restrict this in production)
+        hostname: '**', // Allow any HTTPS domain
       },
     ],
     // Enable static image optimization
@@ -55,6 +46,11 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Production optimizations
+  output: 'standalone',
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: true,
 };
 
 export default nextConfig;
