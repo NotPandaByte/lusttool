@@ -161,9 +161,9 @@ export default function Header() {
                     </motion.div>
 
                     {/* Navigation Links - Responsive Grid */}
-                    <div className="space-y-6 sm:space-y-10">
-                      {/* Row 1: Home, Events, Gallery */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
+                    <div className="space-y-6 sm:space-y-8">
+                      {/* Main Navigation - Row 1: Home, Events, Gallery (4 per row on large screens) */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                         {/* Home */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
@@ -173,14 +173,14 @@ export default function Header() {
                           <Link
                             href="/"
                             onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                               </svg>
                             </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Home</span>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Home</span>
                           </Link>
                         </motion.div>
 
@@ -193,14 +193,14 @@ export default function Header() {
                           <Link
                             href="/events"
                             onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                               </svg>
                             </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Events</span>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Events</span>
                           </Link>
                         </motion.div>
 
@@ -209,150 +209,182 @@ export default function Header() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.3 }}
-                          className="sm:col-span-2 lg:col-span-1"
                         >
                           <Link
                             href="/event-pictures"
                             onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                               </svg>
                             </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Gallery</span>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Gallery</span>
                           </Link>
                         </motion.div>
-                      </div>
 
-                      {/* Row 2: Terms, Privacy, VIPs */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
-                        {/* Terms of Service */}
+                        {/* Our Staff - Only on large screens in first row */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.35 }}
+                          className="hidden lg:block"
                         >
                           <Link
-                            href="/terms-of-service"
+                            href="/staff"
                             onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                               </svg>
                             </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Terms</span>
-                          </Link>
-                        </motion.div>
-
-                        {/* Privacy Policy */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <Link
-                            href="/privacy-policy"
-                            onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
-                          >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                              </svg>
-                            </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Privacy</span>
-                          </Link>
-                        </motion.div>
-
-                        {/* VIPs */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.45 }}
-                          className="sm:col-span-2 lg:col-span-1"
-                        >
-                          <Link
-                            href="/vips"
-                            onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
-                          >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                              </svg>
-                            </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">VIPs</span>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
                           </Link>
                         </motion.div>
                       </div>
 
-                      {/* Row 3: Staff, About, Contact */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
-                        {/* Staff */}
+                      {/* Main Navigation - Row 2: Our Staff (mobile/tablet), VIPs, Contact - Aligned under Events/Gallery */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                        {/* Empty space - aligns with Home */}
+                        <div className="hidden sm:block lg:hidden"></div>
+                        
+                        {/* Our Staff - Mobile and tablet only */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 }}
+                          className="lg:hidden"
+                        >
+                          <Link
+                            href="/staff"
+                            onClick={closeMenu}
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                          >
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                              </svg>
+                            </div>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
+                          </Link>
+                        </motion.div>
+
+                        {/* Empty space - aligns VIPs under Events */}
+                        <div className="hidden lg:block"></div>
+
+                        {/* VIPs - Positioned under Events */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.45 }}
+                        >
+                          <Link
+                            href="/vips"
+                            onClick={closeMenu}
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                          >
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                              </svg>
+                            </div>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">VIPs</span>
+                          </Link>
+                        </motion.div>
+
+                        {/* Contact - Positioned under Gallery */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.5 }}
                         >
                           <Link
-                            href="/staff"
-                            onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
-                          >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                              </svg>
-                            </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
-                          </Link>
-                        </motion.div>
-
-                        {/* About */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.55 }}
-                        >
-                          <Link
-                            href="/about"
-                            onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
-                          >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">About</span>
-                          </Link>
-                        </motion.div>
-
-                        {/* Contact */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.6 }}
-                          className="sm:col-span-2 lg:col-span-1"
-                        >
-                          <Link
                             href="/contact"
                             onClick={closeMenu}
-                            className="block p-6 sm:p-8 lg:p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 mx-auto mb-4 sm:mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                               </svg>
                             </div>
-                            <span className="text-white font-semibold text-lg sm:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Contact</span>
+                            <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Contact</span>
                           </Link>
                         </motion.div>
                       </div>
+
+                                             {/* Smaller Secondary Navigation - Terms, Privacy, About */}
+                       <div className="mt-8 pt-6 border-t border-red-900/20">
+                         <div className="text-center mb-4">
+                           <p className="text-zinc-400 text-xs sm:text-sm font-medium">Legal & Information</p>
+                         </div>
+                         <div className="flex justify-center">
+                           <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg">
+                          {/* Terms of Service */}
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.55 }}
+                          >
+                            <Link
+                              href="/terms-of-service"
+                              onClick={closeMenu}
+                              className="block p-3 sm:p-4 text-center group hover:bg-red-950/15 rounded-lg transition-all duration-300 border border-red-900/20 hover:border-red-700/40 backdrop-blur-sm"
+                            >
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 bg-red-950/20 border border-red-800/30 rounded-full flex items-center justify-center group-hover:bg-red-900/30 group-hover:border-orange-600/40 transition-all duration-300">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                              </div>
+                              <span className="text-white font-medium text-xs sm:text-sm drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Terms</span>
+                            </Link>
+                          </motion.div>
+
+                          {/* Privacy Policy */}
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                          >
+                            <Link
+                              href="/privacy-policy"
+                              onClick={closeMenu}
+                              className="block p-3 sm:p-4 text-center group hover:bg-red-950/15 rounded-lg transition-all duration-300 border border-red-900/20 hover:border-red-700/40 backdrop-blur-sm"
+                            >
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 bg-red-950/20 border border-red-800/30 rounded-full flex items-center justify-center group-hover:bg-red-900/30 group-hover:border-orange-600/40 transition-all duration-300">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                              </div>
+                              <span className="text-white font-medium text-xs sm:text-sm drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Privacy</span>
+                            </Link>
+                          </motion.div>
+
+                          {/* About */}
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.65 }}
+                          >
+                            <Link
+                              href="/about"
+                              onClick={closeMenu}
+                              className="block p-3 sm:p-4 text-center group hover:bg-red-950/15 rounded-lg transition-all duration-300 border border-red-900/20 hover:border-red-700/40 backdrop-blur-sm"
+                            >
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 bg-red-950/20 border border-red-800/30 rounded-full flex items-center justify-center group-hover:bg-red-900/30 group-hover:border-orange-600/40 transition-all duration-300">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                                                             <span className="text-white font-medium text-xs sm:text-sm drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">About</span>
+                             </Link>
+                           </motion.div>
+                           </div>
+                         </div>
+                       </div>
 
                       {/* Staff Dashboard Section - Only for authenticated staff */}
                       {session?.user?.role === 'AUTHENTICATED' && (
