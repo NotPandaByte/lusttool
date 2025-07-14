@@ -170,8 +170,8 @@ export default function Header() {
                 </p>
               </motion.div>
 
-              {/* Navigation Links */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {/* Navigation Links - Row 1: Home, Events, Gallery */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
                 {/* Home */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -196,14 +196,14 @@ export default function Header() {
                   </Link>
                 </motion.div>
 
-                {/* Staff */}
+                {/* Events */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, ...gentleTransition }}
                 >
                   <Link
-                    href="/staff"
+                    href="/events"
                     onClick={closeMenu}
                     className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
@@ -213,10 +213,10 @@ export default function Header() {
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </motion.div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Our Staff</span>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Events</span>
                   </Link>
                 </motion.div>
 
@@ -243,7 +243,10 @@ export default function Header() {
                     <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Gallery</span>
                   </Link>
                 </motion.div>
+              </div>
 
+              {/* Navigation Links - Row 2: Terms, Privacy, VIPs */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
                 {/* Terms of Service */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -292,59 +295,226 @@ export default function Header() {
                   </Link>
                 </motion.div>
 
-                {/* Waiting Room (for authenticated users with waiting status) */}
-                {session?.user?.role === 'WAITING' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.45, ...gentleTransition }}
+                {/* VIPs */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, ...gentleTransition }}
+                >
+                  <Link
+                    href="/vips"
+                    onClick={closeMenu}
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <Link
-                      href="/waiting-room"
-                      onClick={closeMenu}
-                      className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <motion.div 
-                        className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </motion.div>
-                      <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Waiting Room</span>
-                    </Link>
-                  </motion.div>
-                )}
+                      <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                      </svg>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">VIPs</span>
+                  </Link>
+                </motion.div>
               </div>
 
-              {/* Authenticated user dashboard access */}
-              {session?.user?.role === 'AUTHENTICATED' && (
+              {/* Navigation Links - Row 3: Staff, About, Contact */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+                {/* Staff */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, ...gentleTransition }}
+                >
+                  <Link
+                    href="/staff"
+                    onClick={closeMenu}
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                  >
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                      </svg>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
+                  </Link>
+                </motion.div>
+
+                {/* About */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.55, ...gentleTransition }}
+                >
+                  <Link
+                    href="/about"
+                    onClick={closeMenu}
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                  >
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">About</span>
+                  </Link>
+                </motion.div>
+
+                {/* Contact */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, ...gentleTransition }}
+                >
+                  <Link
+                    href="/contact"
+                    onClick={closeMenu}
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                  >
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Contact</span>
+                  </Link>
+                </motion.div>
+              </div>
+
+              {/* Staff Dashboard Section - Only for authenticated staff */}
+              {session?.user?.role === 'AUTHENTICATED' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, ...gentleTransition }}
                   className="mt-16 pt-8 border-t border-red-900/30"
                 >
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 mb-2">
+                      Staff Dashboard
+                    </h3>
+                    <p className="text-zinc-400 text-sm">Management & Administration</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* User Approvals */}
                     <Link
-                      href="/protected/dashboard"
+                      href="/protected/staff-admin"
                       onClick={closeMenu}
-                      className="px-8 py-4 bg-gradient-to-r from-red-700 to-red-800 text-white rounded-lg font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg"
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
                     >
-                      Dashboard
+                      <svg className="w-8 h-8 text-red-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">User Approvals</span>
                     </Link>
-                    
+
+                    {/* Staff Management */}
+                    <Link
+                      href="/protected/staff-management"
+                      onClick={closeMenu}
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <svg className="w-8 h-8 text-orange-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">Staff Management</span>
+                    </Link>
+
+                    {/* Support TODO */}
+                    <Link
+                      href="/protected/support"
+                      onClick={closeMenu}
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <svg className="w-8 h-8 text-red-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 109.75 9.75A9.75 9.75 0 0012 2.25z" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">Support TODO</span>
+                    </Link>
+
+                    {/* Upcoming Planning */}
+                    <Link
+                      href="/protected/planning"
+                      onClick={closeMenu}
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <svg className="w-8 h-8 text-orange-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">Upcoming Planning</span>
+                    </Link>
+
+                    {/* Dancer Management */}
+                    <Link
+                      href="/protected/dancer-management"
+                      onClick={closeMenu}
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <svg className="w-8 h-8 text-red-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">Dancer Management</span>
+                    </Link>
+
+                    {/* Overview */}
+                    <Link
+                      href="/protected/overview"
+                      onClick={closeMenu}
+                      className="p-4 bg-red-950/30 border border-red-800/40 rounded-lg text-center hover:bg-red-900/40 hover:border-orange-600/50 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <svg className="w-8 h-8 text-orange-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                      <span className="text-white font-medium text-sm">Overview</span>
+                    </Link>
+                  </div>
+
+                  {/* Sign Out Button */}
+                  <div className="mt-6 text-center">
                     <button
                       onClick={() => {
                         signOut();
                         closeMenu();
                       }}
-                      className="px-8 py-4 bg-black/30 border border-red-900/50 text-white rounded-lg font-semibold hover:bg-red-950/30 hover:border-red-700/70 transition-all duration-300 backdrop-blur-sm"
+                      className="px-6 py-3 bg-black/30 border border-red-900/50 text-white rounded-lg font-medium hover:bg-red-950/30 hover:border-red-700/70 transition-all duration-300 backdrop-blur-sm"
                     >
                       Sign Out
                     </button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Waiting Room (for users with waiting status) */}
+              {session?.user?.role === 'WAITING' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, ...gentleTransition }}
+                  className="mt-16 pt-8 border-t border-red-900/30"
+                >
+                  <div className="text-center">
+                    <Link
+                      href="/waiting-room"
+                      onClick={closeMenu}
+                      className="px-8 py-4 bg-gradient-to-r from-red-700 to-red-800 text-white rounded-lg font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg"
+                    >
+                      Waiting Room
+                    </Link>
                   </div>
                 </motion.div>
               )}
