@@ -6,11 +6,12 @@ const prisma = new PrismaClient();
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const event = await prisma.event.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         createdBy: {
           select: {
@@ -65,9 +66,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession();
     
     if (!session || !session.user) {
@@ -92,7 +94,7 @@ export async function PATCH(
 
     // Check if user owns the event or is admin
     const existingEvent = await prisma.event.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: { createdById: true, publishedAt: true }
     });
 
@@ -139,7 +141,7 @@ export async function PATCH(
     updateData.updatedAt = new Date();
 
     const updatedEvent = await prisma.event.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: {
         createdBy: {
@@ -185,9 +187,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession();
     
     if (!session || !session.user) {
@@ -196,7 +199,7 @@ export async function DELETE(
 
     // Check if user owns the event or is admin
     const existingEvent = await prisma.event.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: { createdById: true }
     });
 
@@ -209,7 +212,7 @@ export async function DELETE(
     }
 
     await prisma.event.delete({
-      where: { id: params.id }
+      where: { id }
     });
 
     return NextResponse.json({ 

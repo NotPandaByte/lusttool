@@ -6,7 +6,7 @@ import type { Session, User } from "next-auth";
 
 const prisma = new PrismaClient();
 
-const authOptions = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
