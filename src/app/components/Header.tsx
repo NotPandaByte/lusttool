@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { motion, AnimatePresence, Transition } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const smoothTransition: Transition = {
   type: "spring",
@@ -29,6 +29,18 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  // Listen for custom event from homepage
+  useEffect(() => {
+    const handleOpenHeaderModal = () => {
+      setIsMenuOpen(true);
+    };
+
+    window.addEventListener('openHeaderModal', handleOpenHeaderModal);
+    return () => {
+      window.removeEventListener('openHeaderModal', handleOpenHeaderModal);
+    };
+  }, []);
+
   return (
     <>
       {/* Floating Hamburger Icon */}
@@ -38,9 +50,9 @@ export default function Header() {
           opacity: 1, 
           scale: 1,
           boxShadow: [
-            "0 0 20px rgba(255, 255, 255, 0.1)",
-            "0 0 30px rgba(255, 255, 255, 0.2)",
-            "0 0 20px rgba(255, 255, 255, 0.1)"
+            "0 0 20px rgba(220, 38, 38, 0.2)",
+            "0 0 30px rgba(234, 88, 12, 0.3)",
+            "0 0 20px rgba(220, 38, 38, 0.2)"
           ]
         }}
         transition={{ 
@@ -54,22 +66,22 @@ export default function Header() {
         }}
         whileHover={{
           scale: 1.05,
-          boxShadow: "0 0 40px rgba(255, 255, 255, 0.3)"
+          boxShadow: "0 0 40px rgba(234, 88, 12, 0.4)"
         }}
         onClick={toggleMenu}
         className="fixed top-8 right-8 z-[70] 
                    w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20
-                   bg-white/15 backdrop-blur-md hover:bg-white/25 
+                   bg-black/30 backdrop-blur-md hover:bg-red-950/40 
                    rounded-full focus-ring scale-hover 
                    flex items-center justify-center group 
-                   border-2 border-white/30 hover:border-white/50
+                   border-2 border-red-800/40 hover:border-orange-600/60
                    shadow-lg shadow-black/20
                    transition-all duration-300 ease-out
                    cursor-pointer
                    before:absolute before:inset-0 before:rounded-full 
-                   before:bg-gradient-to-br before:from-white/5 before:to-transparent
+                   before:bg-gradient-to-br before:from-red-600/10 before:to-orange-600/5
                    after:absolute after:inset-0 after:rounded-full 
-                   after:bg-gradient-to-t after:from-black/10 after:to-transparent"
+                   after:bg-gradient-to-t after:from-black/20 after:to-transparent"
       >
         <div className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 z-10">
           <motion.span
@@ -122,16 +134,19 @@ export default function Header() {
               duration: 0.3 
             }}
             className="fixed inset-0 z-[60] 
-                       bg-white/20 backdrop-blur-2xl
+                       bg-black/80 backdrop-blur-2xl
                        flex items-center justify-center"
             onClick={closeMenu}
           >
+            {/* Background gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-red-950/30 via-black/50 to-orange-950/30" />
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: 0.1, ...gentleTransition }}
-              className="max-w-7xl w-full mx-6 py-8"
+              className="max-w-7xl w-full mx-6 py-8 relative z-10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Menu Header */}
@@ -141,16 +156,22 @@ export default function Header() {
                 transition={{ delay: 0.15, ...gentleTransition }}
                 className="text-center mb-16"
               >
-                <h2 className="text-6xl font-bold text-white tracking-wide mb-6 drop-shadow-lg">
+                <h2 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 tracking-wide mb-6 drop-shadow-lg">
                   Navigation
                 </h2>
-                <p className="text-white/90 text-2xl font-medium drop-shadow-md">
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+                  className="h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent mx-auto w-32 rounded-full mb-6"
+                />
+                <p className="text-zinc-300 text-2xl font-medium drop-shadow-md">
                   Explore our world
                 </p>
               </motion.div>
 
               {/* Navigation Links */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {/* Home */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -160,34 +181,42 @@ export default function Header() {
                   <Link
                     href="/"
                     onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                       </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">Home</span>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Home</span>
                   </Link>
                 </motion.div>
 
-                {/* Events */}
+                {/* Staff */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, ...gentleTransition }}
                 >
                   <Link
-                    href="/events"
+                    href="/staff"
                     onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                       </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">Events</span>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Our Staff</span>
                   </Link>
                 </motion.div>
 
@@ -198,144 +227,146 @@ export default function Header() {
                   transition={{ delay: 0.3, ...gentleTransition }}
                 >
                   <Link
-                    href="/gallery"
+                    href="/event-pictures"
                     onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">Gallery</span>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Gallery</span>
                   </Link>
                 </motion.div>
 
-                {/* About */}
+                {/* Terms of Service */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35, ...gentleTransition }}
                 >
                   <Link
-                    href="/about"
+                    href="/terms-of-service"
                     onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">About</span>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Terms</span>
                   </Link>
                 </motion.div>
 
-                {/* Staff */}
+                {/* Privacy Policy */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, ...gentleTransition }}
                 >
                   <Link
-                    href="/staff"
+                    href="/privacy-policy"
                     onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                    className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                    <motion.div 
+                      className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-10 h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">Our Staff</span>
+                    </motion.div>
+                    <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Privacy</span>
                   </Link>
                 </motion.div>
 
-                {/* Contact */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.45, ...gentleTransition }}
-                >
-                  <Link
-                    href="/contact"
-                    onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
+                {/* Waiting Room (for authenticated users with waiting status) */}
+                {session?.user?.role === 'WAITING' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45, ...gentleTransition }}
                   >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">Contact</span>
-                  </Link>
-                </motion.div>
+                    <Link
+                      href="/waiting-room"
+                      onClick={closeMenu}
+                      className="block p-10 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                    >
+                      <motion.div 
+                        className="w-20 h-20 mx-auto mb-6 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <svg className="w-10 h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </motion.div>
+                      <span className="text-white font-semibold text-xl drop-shadow-md group-hover:text-orange-100 transition-colors duration-300">Waiting Room</span>
+                    </Link>
+                  </motion.div>
+                )}
+              </div>
 
-                {/* FAQ */}
+              {/* Authenticated user dashboard access */}
+              {session?.user?.role === 'AUTHENTICATED' && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, ...gentleTransition }}
+                  className="mt-16 pt-8 border-t border-red-900/30"
                 >
-                  <Link
-                    href="/faq"
-                    onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
-                  >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">FAQ</span>
-                  </Link>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <Link
+                      href="/protected/dashboard"
+                      onClick={closeMenu}
+                      className="px-8 py-4 bg-gradient-to-r from-red-700 to-red-800 text-white rounded-lg font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg"
+                    >
+                      Dashboard
+                    </Link>
+                    
+                    <button
+                      onClick={() => {
+                        signOut();
+                        closeMenu();
+                      }}
+                      className="px-8 py-4 bg-black/30 border border-red-900/50 text-white rounded-lg font-semibold hover:bg-red-950/30 hover:border-red-700/70 transition-all duration-300 backdrop-blur-sm"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
                 </motion.div>
+              )}
 
-                {/* Staff Login */}
+              {/* Staff Login Section - Separate and Less Prominent */}
+              {!session && status !== 'loading' && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.55, ...gentleTransition }}
+                  transition={{ delay: 0.8, ...gentleTransition }}
+                  className="mt-20 pt-8"
                 >
-                  <Link
-                    href={session?.user?.role === 'AUTHENTICATED' ? '/protected/dashboard' : '/signup'}
-                    onClick={closeMenu}
-                    className="block p-10 text-center group hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/15 hover:border-white/30"
-                  >
-                    <div className="w-20 h-20 mx-auto mb-6 bg-white/25 rounded-full flex items-center justify-center group-hover:bg-white/35 transition-colors shadow-xl">
-                      <svg className="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <span className="text-white font-semibold text-xl drop-shadow-md">
-                      {session?.user?.role === 'AUTHENTICATED' ? 'Dashboard' : 'Staff Login'}
-                    </span>
-                  </Link>
-                </motion.div>
-              </div>
-
-              {/* Sign Out (if authenticated) */}
-              {status === 'authenticated' && session?.user && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, ...gentleTransition }}
-                  className="mt-16 pt-10 border-t border-white/30"
-                >
-                  <button
-                    onClick={() => {
-                      signOut();
-                      closeMenu();
-                    }}
-                    className="w-full p-8 text-center text-white/90 hover:text-white hover:bg-white/15 rounded-xl transition-all duration-300 border border-white/25 hover:border-white/40"
-                  >
-                    <div className="flex items-center justify-center space-x-6">
-                      <svg className="w-8 h-8 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg>
-                      <span className="font-semibold text-2xl drop-shadow-md">Sign Out</span>
-                    </div>
-                  </button>
+                  <div className="flex flex-col items-center justify-center">
+                    <p className="text-zinc-500 text-sm mb-4 font-medium">Staff Members</p>
+                    <Link
+                      href="/signup"
+                      onClick={closeMenu}
+                      className="px-6 py-3 bg-black/20 border border-red-900/40 text-zinc-400 rounded-lg font-medium hover:bg-red-950/20 hover:border-red-800/60 hover:text-zinc-300 transition-all duration-300 backdrop-blur-sm text-sm"
+                    >
+                      Staff Login
+                    </Link>
+                  </div>
                 </motion.div>
               )}
             </motion.div>
