@@ -462,7 +462,7 @@ export default function SupportPage() {
             Still Need Help?
           </h2>
           <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
-            Can't find what you're looking for? Our support team is here to help. 
+            Can&apos;t find what you&apos;re looking for? Our support team is here to help. 
             Get personalized assistance and quick responses to your questions.
           </p>
           

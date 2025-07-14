@@ -193,7 +193,7 @@ export default function ContactPage() {
             }}
             className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            We're here to help and answer any questions you might have. 
+            We&apos;re here to help and answer any questions you might have. 
             Reach out to us through any of our channels or send us a message directly.
           </motion.p>
         </motion.div>
@@ -324,7 +324,7 @@ export default function ContactPage() {
                     </svg>
                   </motion.div>
                   <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
-                  <p className="text-gray-300">Thank you for reaching out. We'll get back to you soon.</p>
+                  <p className="text-gray-300">Thank you for reaching out. We&apos;ll get back to you soon.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">

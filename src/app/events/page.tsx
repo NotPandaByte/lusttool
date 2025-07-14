@@ -450,7 +450,7 @@ export default function EventsPage() {
                     No Upcoming Events
                   </h3>
                   <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-8">
-                    We're planning some amazing experiences for you! Check back soon for upcoming exclusive events, 
+                    We&apos;re planning some amazing experiences for you! Check back soon for upcoming exclusive events, 
                     or join our newsletter to be the first to know when new events are announced.
                   </p>
                   
@@ -550,7 +550,7 @@ export default function EventsPage() {
                     No Past Events Yet
                   </h3>
                   <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-8">
-                    Our event history will appear here once we've hosted some amazing experiences. 
+                    Our event history will appear here once we&apos;ve hosted some amazing experiences. 
                     Stay tuned for our upcoming events that will create lasting memories!
                   </p>
                   

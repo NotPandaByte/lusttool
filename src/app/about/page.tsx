@@ -207,7 +207,7 @@ export default function AboutPage() {
                 className="bg-gradient-to-br from-red-500/10 via-orange-500/10 to-red-500/10 backdrop-blur-md border border-white/10 rounded-3xl p-12 mb-8"
               >
                 <blockquote className="text-2xl md:text-3xl font-light text-gray-200 leading-relaxed mb-6 italic">
-                  "We believe that authentic connections and memorable experiences are the foundation of any great community."
+                  &ldquo;We believe that authentic connections and memorable experiences are the foundation of any great community.&rdquo;
                 </blockquote>
                 <div className="w-24 h-1 bg-gradient-to-r from-red-400 to-orange-400 mx-auto mb-6 rounded-full"></div>
                 <p className="text-lg text-gray-300">
