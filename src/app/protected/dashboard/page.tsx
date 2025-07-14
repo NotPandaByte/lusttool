@@ -455,6 +455,7 @@ export default function Dashboard() {
   const [staff, setStaff] = useState<Staff[]>([]);
   const [loading, setLoading] = useState(true);
   const [promoting, setPromoting] = useState<string | null>(null);
+  const [rejecting, setRejecting] = useState<string | null>(null);
   const [deletingStaff, setDeletingStaff] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'users' | 'staff'>('users');
   const [showStaffForm, setShowStaffForm] = useState(false);
@@ -623,6 +624,31 @@ export default function Dashboard() {
       alert('Error promoting user');
     } finally {
       setPromoting(null);
+    }
+  };
+
+  const rejectUser = async (userId: string) => {
+    setRejecting(userId);
+    try {
+      const response = await fetch('/api/reject-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (response.ok) {
+        setWaitingUsers(prev => prev.filter(user => user.id !== userId));
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.error}`);
+      }
+    } catch (error) {
+      console.error('Error rejecting user:', error);
+      alert('Error rejecting user');
+    } finally {
+      setRejecting(null);
     }
   };
 
@@ -913,22 +939,40 @@ export default function Dashboard() {
                                 <span className="px-3 py-1 text-sm bg-yellow-500/20 text-yellow-300 rounded-full border border-yellow-500/30">
                                   {user.role}
                                 </span>
-                                <motion.button
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  onClick={() => promoteUser(user.id)}
-                                  disabled={promoting === user.id}
-                                  className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg animate-smooth font-medium glow-subtle btn-hover"
-                                >
-                                  {promoting === user.id ? (
-                                    <div className="flex items-center space-x-2">
-                                      <div className="w-4 h-4 spinner"></div>
-                                      <span>Approving...</span>
-                                    </div>
-                                  ) : (
-                                    'Approve'
-                                  )}
-                                </motion.button>
+                                <div className="flex items-center space-x-2">
+                                  <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => promoteUser(user.id)}
+                                    disabled={promoting === user.id || rejecting === user.id}
+                                    className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg animate-smooth font-medium glow-subtle btn-hover"
+                                  >
+                                    {promoting === user.id ? (
+                                      <div className="flex items-center space-x-2">
+                                        <div className="w-4 h-4 spinner"></div>
+                                        <span>Approving...</span>
+                                      </div>
+                                    ) : (
+                                      'Approve'
+                                    )}
+                                  </motion.button>
+                                  <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => rejectUser(user.id)}
+                                    disabled={rejecting === user.id || promoting === user.id}
+                                    className="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg animate-smooth font-medium glow-subtle btn-hover"
+                                  >
+                                    {rejecting === user.id ? (
+                                      <div className="flex items-center space-x-2">
+                                        <div className="w-4 h-4 spinner"></div>
+                                        <span>Rejecting...</span>
+                                      </div>
+                                    ) : (
+                                      'Reject'
+                                    )}
+                                  </motion.button>
+                                </div>
                               </div>
                             </div>
                           </motion.div>

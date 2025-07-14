@@ -17,6 +17,7 @@ datasource db {
 enum UserRole {
   WAITING
   AUTHENTICATED
+  REJECTED
 }
 
 model User {

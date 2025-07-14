@@ -17,7 +17,7 @@ const gentleTransition: Transition = {
 
 export default function SignupPage() {
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: '/' });
+    signIn('google', { callbackUrl: '/waiting-room' });
   };
 
   return (
