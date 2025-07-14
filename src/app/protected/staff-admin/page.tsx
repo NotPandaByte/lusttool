@@ -26,6 +26,412 @@ interface Staff {
   order: number;
 }
 
+interface LinkItem {
+  label: string;
+  url: string;
+  id: string;
+}
+
+// Link Management Modal Component
+function LinkManagementModal({ 
+  isOpen, 
+  onClose, 
+  links,
+  onSave,
+  onEdit,
+  onDelete
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  links: LinkItem[];
+  onSave: (link: LinkItem) => void;
+  onEdit: (link: LinkItem) => void;
+  onDelete: (linkId: string) => void;
+}) {
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [url, setUrl] = useState('');
+  const [label, setLabel] = useState('');
+  
+  const predefinedLabels = [
+    'Server', 'Instagram', 'Twitter', 'Discord', 'GitHub', 
+    'YouTube', 'Twitch', 'LinkedIn', 'Website', 'Portfolio'
+  ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!url.trim()) return;
+    
+    const finalLabel = label.trim() || url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+    
+    onSave({
+      id: Date.now().toString(),
+      url: url.trim(),
+      label: finalLabel
+    });
+    
+    // Reset form
+    setUrl('');
+    setLabel('');
+    setShowAddForm(false);
+  };
+
+  const handlePredefinedLabel = (predefinedLabel: string) => {
+    setLabel(predefinedLabel);
+  };
+
+  const handleClose = () => {
+    setUrl('');
+    setLabel('');
+    setShowAddForm(false);
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={handleClose}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          className="bg-zinc-900 rounded-2xl max-w-lg w-full max-h-[80vh] overflow-hidden border border-white/20"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-white">
+                Manage Links
+              </h3>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleClose}
+                className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </motion.button>
+            </div>
+
+            <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+              {/* Current Links */}
+              <div>
+                <h4 className="text-white font-medium mb-3">Current Links</h4>
+                <div className="space-y-2">
+                  {links.length === 0 ? (
+                    <div className="text-zinc-500 text-sm text-center py-4 bg-white/5 rounded-lg">
+                      No links added yet
+                    </div>
+                  ) : (
+                    links.map((link) => (
+                      <div key={link.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+                        <div className="flex-1">
+                          <div className="font-medium text-white text-sm">{link.label}</div>
+                          <div className="text-zinc-400 text-xs truncate">{link.url}</div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => onEdit(link)}
+                            className="w-6 h-6 bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 rounded-md flex items-center justify-center transition-colors"
+                          >
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => onDelete(link.id)}
+                            className="w-6 h-6 bg-red-500/20 hover:bg-red-500/40 text-red-400 rounded-md flex items-center justify-center transition-colors"
+                          >
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </motion.button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Add Link Form */}
+              <div>
+                {!showAddForm ? (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setShowAddForm(true)}
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                  >
+                    Add New Link
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="bg-white/5 rounded-lg p-4 border border-white/10"
+                  >
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+                        <label className="block text-white font-medium mb-2 text-sm">URL *</label>
+                        <input
+                          type="url"
+                          value={url}
+                          onChange={(e) => setUrl(e.target.value)}
+                          className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all text-sm"
+                          placeholder="https://example.com"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-white font-medium mb-2 text-sm">Display Label</label>
+                        <input
+                          type="text"
+                          value={label}
+                          onChange={(e) => setLabel(e.target.value)}
+                          className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all text-sm"
+                          placeholder="Custom label (optional)"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-white font-medium mb-2 text-sm">Quick Labels</label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {predefinedLabels.map((predefinedLabel) => (
+                            <motion.button
+                              key={predefinedLabel}
+                              type="button"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => handlePredefinedLabel(predefinedLabel)}
+                              className={`px-2 py-1 rounded-md text-xs font-medium transition-all ${
+                                label === predefinedLabel
+                                  ? 'bg-purple-600 text-white'
+                                  : 'bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white'
+                              }`}
+                            >
+                              {predefinedLabel}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex space-x-3">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          type="submit"
+                          className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
+                        >
+                          Add Link
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          type="button"
+                          onClick={() => setShowAddForm(false)}
+                          className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
+                        >
+                          Cancel
+                        </motion.button>
+                      </div>
+                    </form>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+
+            {/* Save All Button */}
+            <div className="mt-6 pt-4 border-t border-white/10">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleClose}
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+              >
+                Save All Links
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+// Edit Link Modal Component
+function EditLinkModal({ 
+  isOpen, 
+  onClose, 
+  link,
+  onSave
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  link: LinkItem | null;
+  onSave: (link: LinkItem) => void;
+}) {
+  const [url, setUrl] = useState(link?.url || '');
+  const [label, setLabel] = useState(link?.label || '');
+  
+  const predefinedLabels = [
+    'Server', 'Instagram', 'Twitter', 'Discord', 'GitHub', 
+    'YouTube', 'Twitch', 'LinkedIn', 'Website', 'Portfolio'
+  ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!url.trim() || !link) return;
+    
+    const finalLabel = label.trim() || url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+    
+    onSave({
+      id: link.id,
+      url: url.trim(),
+      label: finalLabel
+    });
+    
+    onClose();
+  };
+
+  const handlePredefinedLabel = (predefinedLabel: string) => {
+    setLabel(predefinedLabel);
+  };
+
+  const handleClose = () => {
+    setUrl(link?.url || '');
+    setLabel(link?.label || '');
+    onClose();
+  };
+
+  useEffect(() => {
+    if (link) {
+      setUrl(link.url);
+      setLabel(link.label);
+    }
+  }, [link]);
+
+  if (!isOpen || !link) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={handleClose}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          className="bg-zinc-900 rounded-2xl max-w-md w-full border border-white/20 overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-white">
+                Edit Link
+              </h3>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleClose}
+                className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </motion.button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-white font-medium mb-2">URL *</label>
+                <input
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  placeholder="https://example.com"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-white font-medium mb-2">Display Label</label>
+                <input
+                  type="text"
+                  value={label}
+                  onChange={(e) => setLabel(e.target.value)}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  placeholder="Custom label (optional)"
+                />
+              </div>
+
+              <div>
+                <label className="block text-white font-medium mb-3">Quick Labels</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {predefinedLabels.map((predefinedLabel) => (
+                    <motion.button
+                      key={predefinedLabel}
+                      type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handlePredefinedLabel(predefinedLabel)}
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        label === predefinedLabel
+                          ? 'bg-purple-600 text-white'
+                          : 'bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {predefinedLabel}
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex space-x-3 pt-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                >
+                  Update Link
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="button"
+                  onClick={handleClose}
+                  className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </motion.button>
+              </div>
+            </form>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 export default function StaffAdminPage() {
   const { data: session, status } = useSession();
   const [activeSection, setActiveSection] = useState<'users' | 'staff'>('users');
@@ -52,6 +458,80 @@ export default function StaffAdminPage() {
     links: '',
     order: 0
   });
+
+  // Link modal state
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [isEditLinkModalOpen, setIsEditLinkModalOpen] = useState(false);
+  const [editingLink, setEditingLink] = useState<LinkItem | null>(null);
+  const [currentFormType, setCurrentFormType] = useState<'add' | 'edit'>('add');
+  const [tempLinks, setTempLinks] = useState<LinkItem[]>([]);
+
+  // Helper functions to convert between string and LinkItem[] formats
+  const parseLinksString = (linksString: string): LinkItem[] => {
+    if (!linksString) return [];
+    return linksString.split('\n').filter(link => link.trim()).map((link, index) => {
+      const cleanLink = link.trim();
+      if (cleanLink.includes('|')) {
+        const [label, url] = cleanLink.split('|', 2);
+        return {
+          id: `${index}-${Date.now()}`,
+          label: label.trim(),
+          url: url.trim()
+        };
+      } else {
+        return {
+          id: `${index}-${Date.now()}`,
+          label: cleanLink.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0],
+          url: cleanLink
+        };
+      }
+    });
+  };
+
+  const linksToString = (links: LinkItem[]): string => {
+    return links.map(link => `${link.label}|${link.url}`).join('\n');
+  };
+
+  // Link management functions
+  const openLinkModal = (formType: 'add' | 'edit', existingLinks: string) => {
+    setCurrentFormType(formType);
+    setTempLinks(parseLinksString(existingLinks));
+    setIsLinkModalOpen(true);
+  };
+
+  const handleSaveLink = (newLink: LinkItem) => {
+    if (editingLink) {
+      // Update existing link
+      setTempLinks(prev => prev.map(link => link.id === editingLink.id ? newLink : link));
+    } else {
+      // Add new link
+      setTempLinks(prev => [...prev, newLink]);
+    }
+    setEditingLink(null);
+  };
+
+  const handleDeleteLink = (linkId: string) => {
+    setTempLinks(prev => prev.filter(link => link.id !== linkId));
+  };
+
+  const handleEditLink = (link: LinkItem) => {
+    setEditingLink(link);
+    setIsEditLinkModalOpen(true);
+  };
+
+  const handleUpdateLink = (updatedLink: LinkItem) => {
+    setTempLinks(prev => prev.map(link => link.id === updatedLink.id ? updatedLink : link));
+    setEditingLink(null);
+    setIsEditLinkModalOpen(false);
+  };
+
+  const handleSaveAllLinks = () => {
+    const linksString = linksToString(tempLinks);
+    setFormData(prev => ({ ...prev, links: linksString }));
+    setIsLinkModalOpen(false);
+    setTempLinks([]);
+    setEditingLink(null);
+  };
 
   useEffect(() => {
     if (activeSection === 'users') {
@@ -446,6 +926,13 @@ export default function StaffAdminPage() {
                           {member.description && (
                             <p className="text-zinc-400 text-sm mt-2 line-clamp-2">{member.description}</p>
                           )}
+                          {member.links && (
+                            <div className="mt-2">
+                              <p className="text-zinc-500 text-xs">
+                                {parseLinksString(member.links).length} link{parseLinksString(member.links).length !== 1 ? 's' : ''}
+                              </p>
+                            </div>
+                          )}
                         </div>
 
                         <div className="flex space-x-2">
@@ -624,6 +1111,40 @@ export default function StaffAdminPage() {
                     </div>
                   </div>
 
+                  {/* Links Section */}
+                  <div>
+                    <label className="block text-white font-medium mb-2">Links</label>
+                    <div className="space-y-3">
+                      {/* Current Links Display */}
+                      <div className="min-h-[80px] bg-white/5 border border-white/10 rounded-lg p-3">
+                        {formData.links ? (
+                          <div className="flex flex-wrap gap-2">
+                            {parseLinksString(formData.links).map((link, index) => (
+                              <span key={index} className="inline-flex items-center px-2 py-1 bg-purple-500/20 text-purple-300 rounded-md text-xs">
+                                {link.label}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-zinc-500 text-sm text-center py-4">
+                            No links added yet
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Manage Links Button */}
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={() => openLinkModal('add', formData.links)}
+                        className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                      >
+                        Manage Links
+                      </motion.button>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-white font-medium mb-2">Display Order</label>
                     <input
@@ -659,6 +1180,24 @@ export default function StaffAdminPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Link Management Modal */}
+      <LinkManagementModal 
+        isOpen={isLinkModalOpen}
+        onClose={handleSaveAllLinks}
+        links={tempLinks}
+        onSave={handleSaveLink}
+        onEdit={handleEditLink}
+        onDelete={handleDeleteLink}
+      />
+
+      {/* Edit Link Modal */}
+      <EditLinkModal 
+        isOpen={isEditLinkModalOpen}
+        onClose={() => setIsEditLinkModalOpen(false)}
+        link={editingLink}
+        onSave={handleUpdateLink}
+      />
     </div>
   );
 } 
