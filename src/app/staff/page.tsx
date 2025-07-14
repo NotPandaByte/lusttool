@@ -7,7 +7,6 @@ import { VRChatAvatarViewer } from './components/VRChatAvatarViewer';
 interface Staff {
   id: string;
   name: string;
-  position: string;
   rank?: string;
   description?: string;
   image?: string;
@@ -166,7 +165,7 @@ function AvatarModal({ staff, isOpen, onClose }: { staff: Staff | null; isOpen: 
                 </div>
                 <div>
                   <h1 className="text-white font-bold text-3xl">{staff.name}</h1>
-                  <p className="text-indigo-400 font-semibold text-lg">{staff.position}</p>
+                  <p className="text-indigo-400 font-semibold text-lg">{staff.rank || 'Staff'}</p>
                   {staff.rank && (
                     <div className="inline-flex items-center px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30 mt-2">
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -318,7 +317,7 @@ function StaffModal({ staff, isOpen, onClose, onViewAvatar }: {
                       className="flex-1"
                     >
                       <h1 className="text-white font-bold text-3xl mb-2">{staff.name}</h1>
-                      <p className="text-indigo-400 font-semibold text-xl mb-3">{staff.position}</p>
+                      <p className="text-indigo-400 font-semibold text-xl mb-3">{staff.rank || 'Staff'}</p>
                       
                       <div className="flex items-center space-x-3">
                         {staff.rank && (
@@ -505,6 +504,50 @@ export default function StaffPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [avatarViewerStaff, setAvatarViewerStaff] = useState<Staff | null>(null);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  
+  // Define rank order
+  const rankOrder = ['owner', 'devs', 'admin', 'mod', 'security', 'hosts', 'dancer'];
+  
+  // Group staff by rank
+  const groupStaffByRank = (staff: Staff[]) => {
+    const grouped: { [key: string]: Staff[] } = {};
+    
+    // Initialize all ranks
+    rankOrder.forEach(rank => {
+      grouped[rank] = [];
+    });
+    
+    // Add unranked staff
+    grouped['staff'] = [];
+    
+    // Group staff by rank
+    staff.forEach(member => {
+      if (member.rank && rankOrder.includes(member.rank)) {
+        grouped[member.rank].push(member);
+      } else {
+        grouped['staff'].push(member);
+      }
+    });
+    
+    return grouped;
+  };
+  
+  const groupedStaff = groupStaffByRank(staff);
+  
+  // Get capitalized rank name for display
+  const getRankDisplayName = (rank: string) => {
+    const displayNames: { [key: string]: string } = {
+      owner: 'Owner',
+      devs: 'Developers',
+      admin: 'Administrators',
+      mod: 'Moderators',
+      security: 'Security',
+      hosts: 'Hosts',
+      dancer: 'Dancers',
+      staff: 'Staff'
+    };
+    return displayNames[rank] || rank;
+  };
 
   const fetchStaff = async () => {
     try {
@@ -609,8 +652,34 @@ export default function StaffPage() {
                   </p>
                 </motion.div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {staff.map((member, index) => (
+                <div className="space-y-16">
+                  {/* Rank Sections */}
+                  {[...rankOrder, 'staff'].map((rank, rankIndex) => {
+                    const members = groupedStaff[rank];
+                    if (members.length === 0) return null;
+                    
+                    return (
+                      <motion.div
+                        key={rank}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: rankIndex * 0.1, ...gentleTransition }}
+                        className="space-y-8"
+                      >
+                        {/* Section Header */}
+                        <div className="text-center">
+                          <h2 className="text-3xl font-bold text-white mb-2">
+                            {getRankDisplayName(rank)}
+                          </h2>
+                          <div className="w-24 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-2"></div>
+                          <p className="text-zinc-400 text-sm">
+                            {members.length} {members.length === 1 ? 'member' : 'members'}
+                          </p>
+                        </div>
+                        
+                        {/* Staff Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                          {members.map((member, index) => (
                     <motion.div
                       key={member.id}
                       layout
@@ -663,7 +732,7 @@ export default function StaffPage() {
                               
                               <div className="flex-1">
                                 <h3 className="text-white font-bold text-lg mb-1">{member.name}</h3>
-                                <p className="text-indigo-300 font-medium text-sm">{member.position}</p>
+                                <p className="text-indigo-300 font-medium text-sm">{member.rank || 'Staff'}</p>
                               </div>
                             </div>
                           </div>
@@ -716,10 +785,14 @@ export default function StaffPage() {
                         </div>
                       </div>
                     </motion.div>
-                  ))}
-                </div>
-              )}
-            </AnimatePresence>
+                            ))}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                )}
+              </AnimatePresence>
           </motion.div>
         </div>
       </div>

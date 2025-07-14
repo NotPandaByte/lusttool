@@ -36,7 +36,7 @@ model User {
 model Staff {
   id          String   @id @default(cuid())
   name        String
-  position    String
+  position    String?
   rank        String?
   description String?
   image       String?

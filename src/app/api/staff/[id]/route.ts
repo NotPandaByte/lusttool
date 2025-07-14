@@ -34,12 +34,12 @@ export async function PUT(
     }
 
     const { id } = await params;
-    const { name, position, rank, description, image, banner, vrchatAvatar, links, order } = await request.json();
+    const { name, rank, description, image, banner, vrchatAvatar, links, order } = await request.json();
 
     // Basic validation
-    if (!name || !position) {
+    if (!name) {
       return NextResponse.json(
-        { error: 'Name and position are required' },
+        { error: 'Name is required' },
         { status: 400 }
       );
     }
@@ -49,7 +49,6 @@ export async function PUT(
       where: { id },
       data: {
         name,
-        position,
         rank,
         description,
         image,

@@ -17,7 +17,6 @@ interface User {
 interface Staff {
   id: string;
   name: string;
-  position: string;
   rank?: string;
   description?: string;
   image?: string;
@@ -461,7 +460,6 @@ export default function Dashboard() {
   const [showStaffForm, setShowStaffForm] = useState(false);
   const [staffForm, setStaffForm] = useState({
     name: '',
-    position: '',
     rank: '',
     description: '',
     image: '',
@@ -475,7 +473,6 @@ export default function Dashboard() {
   const [uploading, setUploading] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
-    position: '',
     rank: '',
     description: '',
     image: '',
@@ -666,7 +663,7 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json();
         setStaff(prev => [...prev, data.staff]);
-        setStaffForm({ name: '', position: '', rank: '', description: '', image: '', banner: '', vrchatAvatar: '', links: '', order: 0 });
+        setStaffForm({ name: '', rank: '', description: '', image: '', banner: '', vrchatAvatar: '', links: '', order: 0 });
         setShowStaffForm(false);
       } else {
         const error = await response.json();
@@ -731,7 +728,6 @@ export default function Dashboard() {
     setEditingStaff(staff);
     setEditForm({
       name: staff.name,
-      position: staff.position,
       rank: staff.rank || '',
       description: staff.description || '',
       image: staff.image || '',
@@ -1030,17 +1026,7 @@ export default function Dashboard() {
                               placeholder="Staff member name"
                             />
                           </div>
-                          <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Position</label>
-                            <input
-                              type="text"
-                              required
-                              value={staffForm.position}
-                              onChange={(e) => setStaffForm(prev => ({ ...prev, position: e.target.value }))}
-                              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus-ring animate-smooth"
-                              placeholder="Job title/position"
-                            />
-                          </div>
+
                           <div>
                             <label className="block text-sm font-medium text-zinc-300 mb-2">Rank</label>
                             <select
@@ -1299,7 +1285,7 @@ export default function Dashboard() {
                                       <h3 className="font-semibold text-white text-base">
                                         {member.name}
                                       </h3>
-                                      <p className="text-indigo-300 text-xs">{member.position}</p>
+                                      <p className="text-indigo-300 text-xs">{member.rank || 'Staff'}</p>
                                     </div>
                                   </div>
                                 </div>
@@ -1429,16 +1415,7 @@ export default function Dashboard() {
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-white font-medium mb-2">Position *</label>
-                        <input
-                          type="text"
-                          value={editForm.position}
-                          onChange={(e) => setEditForm({ ...editForm, position: e.target.value })}
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                          required
-                        />
-                      </div>
+
 
                       <div>
                         <label className="block text-white font-medium mb-2">Rank</label>
@@ -1652,10 +1629,7 @@ export default function Dashboard() {
                           <span className="text-zinc-400">Name:</span>
                           <span className="text-white">{editingStaff.name}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-400">Position:</span>
-                          <span className="text-indigo-400">{editingStaff.position}</span>
-                        </div>
+
                         {editingStaff.rank && (
                           <div className="flex justify-between">
                             <span className="text-zinc-400">Rank:</span>

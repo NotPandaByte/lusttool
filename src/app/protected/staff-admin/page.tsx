@@ -7,7 +7,6 @@ import { useSession } from 'next-auth/react';
 interface Staff {
   id: string;
   name: string;
-  position: string;
   rank?: string;
   description?: string;
   image?: string;
@@ -24,7 +23,6 @@ export default function StaffAdminPage() {
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    position: '',
     rank: '',
     description: '',
     image: '',
@@ -149,7 +147,6 @@ export default function StaffAdminPage() {
       setEditingStaff(staff);
       setFormData({
         name: staff.name,
-        position: staff.position,
         rank: staff.rank || '',
         description: staff.description || '',
         image: staff.image || '',
@@ -158,7 +155,6 @@ export default function StaffAdminPage() {
       });
       console.log('Setting form data for edit:', {
         name: staff.name,
-        position: staff.position,
         rank: staff.rank || '',
         description: staff.description || '',
         image: staff.image || '',
@@ -169,7 +165,6 @@ export default function StaffAdminPage() {
       setEditingStaff(null);
       setFormData({
         name: '',
-        position: '',
         rank: '',
         description: '',
         image: '',
@@ -236,10 +231,7 @@ export default function StaffAdminPage() {
                 
                 <div className="text-center mb-4">
                   <h3 className="text-white font-bold text-lg">{member.name}</h3>
-                  <p className="text-indigo-400 text-sm">{member.position}</p>
-                  {member.rank && (
-                    <p className="text-yellow-400 text-sm">{member.rank}</p>
-                  )}
+                  <p className="text-indigo-400 text-sm">{member.rank || 'Staff'}</p>
                 </div>
 
                 <div className="flex space-x-2">
@@ -308,16 +300,7 @@ export default function StaffAdminPage() {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-white font-medium mb-2">Position</label>
-                    <input
-                      type="text"
-                      value={formData.position}
-                      onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      required
-                    />
-                  </div>
+
 
                   <div>
                     <label className="block text-white font-medium mb-2">Rank</label>
