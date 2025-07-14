@@ -21,8 +21,10 @@ const upload = multer({
 })
 
 // Helper to run middleware
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: any) {
   return new Promise((resolve, reject) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result)
@@ -41,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Run multer middleware
     await runMiddleware(req, res, upload.single('image'))
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const file = (req as any).file
     if (!file) {
       return res.status(400).json({ error: 'No file uploaded' })
