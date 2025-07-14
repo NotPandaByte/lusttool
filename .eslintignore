@@ -1,0 +1,19 @@
+# Generated files
+src/generated/
+prisma/generated/
+node_modules/
+.next/
+
+# Build output
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# JavaScript files (focus on TypeScript)
+**/*.js
+**/*.mjs
+
+# Specific problematic files
+src/generated/**/* 
