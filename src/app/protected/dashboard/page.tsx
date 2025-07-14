@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, Transition } from 'framer-motion';
 import { VRChatAvatarViewer } from '../../staff/components/VRChatAvatarViewer';
+import { ImageDebugger } from '../../components/ImageDebugger';
 
 interface User {
   id: string;
@@ -699,6 +700,8 @@ export default function Dashboard() {
   };
 
   const handleFileUpload = async (file: File, type: 'image' | 'model', category: string = 'staff') => {
+    console.log('Starting file upload:', { fileName: file.name, fileSize: file.size, type, category });
+    
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', type);
@@ -712,9 +715,13 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Upload successful:', data);
+        console.log('Image URL generated:', data.url);
+        console.log('Full URL would be:', `${window.location.origin}${data.url}`);
         return data.url;
       } else {
         const errorResponse = await response.json();
+        console.error('Upload failed with response:', errorResponse);
         alert(`Upload error: ${errorResponse.error || 'Unknown error'}`);
       }
     } catch (error) {
@@ -1068,7 +1075,10 @@ export default function Dashboard() {
                             />
                             {staffForm.image && (
                               <div className="mt-3">
-                                <img src={staffForm.image} alt="Preview" className="w-16 h-16 object-cover rounded-lg border border-white/20" />
+                                <ImageDebugger 
+                                  imageUrl={staffForm.image} 
+                                  className="w-16 h-16 object-cover rounded-lg border border-white/20" 
+                                />
                               </div>
                             )}
                           </div>
