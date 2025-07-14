@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, Transition } from 'framer-motion';
 import { VRChatAvatarViewer } from '../../staff/components/VRChatAvatarViewer';
-import { ImageDebugger } from '../../components/ImageDebugger';
 
 interface User {
   id: string;
