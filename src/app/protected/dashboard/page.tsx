@@ -1062,7 +1062,7 @@ export default function Dashboard() {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                   setUploading(true);
-                                  const url = await handleFileUpload(file, 'image');
+                                  const url = await handleFileUpload(file);
                                   if (url) {
                                     setStaffForm(prev => ({ ...prev, image: url }));
                                   }
@@ -1090,7 +1090,7 @@ export default function Dashboard() {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                   setUploading(true);
-                                  const url = await handleFileUpload(file, 'image');
+                                  const url = await handleFileUpload(file);
                                   if (url) {
                                     setStaffForm(prev => ({ ...prev, banner: url }));
                                   }
@@ -1115,7 +1115,7 @@ export default function Dashboard() {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                   setUploading(true);
-                                  const url = await handleFileUpload(file, 'model');
+                                  const url = await handleFileUpload(file);
                                   if (url) {
                                     setStaffForm(prev => ({ ...prev, vrchatAvatar: url }));
                                   }
@@ -1496,7 +1496,7 @@ export default function Dashboard() {
                             const file = e.target.files?.[0];
                             if (file) {
                               setUploading(true);
-                              const url = await handleFileUpload(file, 'image');
+                              const url = await handleFileUpload(file);
                               if (url) {
                                 setEditForm({ ...editForm, image: url });
                               }
@@ -1521,7 +1521,7 @@ export default function Dashboard() {
                             const file = e.target.files?.[0];
                             if (file) {
                               setUploading(true);
-                              const url = await handleFileUpload(file, 'image');
+                              const url = await handleFileUpload(file);
                               if (url) {
                                 setEditForm({ ...editForm, banner: url });
                               }
@@ -1546,7 +1546,7 @@ export default function Dashboard() {
                             const file = e.target.files?.[0];
                             if (file) {
                               setUploading(true);
-                              const url = await handleFileUpload(file, 'model');
+                              const url = await handleFileUpload(file);
                               if (url) {
                                 setEditForm({ ...editForm, vrchatAvatar: url });
                               }
