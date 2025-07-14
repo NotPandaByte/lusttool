@@ -10,7 +10,9 @@ interface Staff {
   rank?: string;
   description?: string;
   image?: string;
+  banner?: string;
   vrchatAvatar?: string;
+  links?: string;
   order: number;
 }
 
@@ -26,7 +28,9 @@ export default function StaffAdminPage() {
     rank: '',
     description: '',
     image: '',
+    banner: '',
     vrchatAvatar: '',
+    links: '',
     order: 0
   });
 
@@ -150,7 +154,9 @@ export default function StaffAdminPage() {
         rank: staff.rank || '',
         description: staff.description || '',
         image: staff.image || '',
+        banner: staff.banner || '',
         vrchatAvatar: staff.vrchatAvatar || '',
+        links: staff.links || '',
         order: staff.order
       });
       console.log('Setting form data for edit:', {
@@ -168,7 +174,9 @@ export default function StaffAdminPage() {
         rank: '',
         description: '',
         image: '',
+        banner: '',
         vrchatAvatar: '',
+        links: '',
         order: 0
       });
       console.log('Setting form data for new staff');
@@ -351,6 +359,31 @@ export default function StaffAdminPage() {
                     {formData.image && (
                       <div className="mt-2">
                         <img src={formData.image} alt="Preview" className="w-16 h-16 object-cover rounded-lg" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-white font-medium mb-2">Banner Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setUploading(true);
+                          const url = await handleFileUpload(file, 'image');
+                          if (url) {
+                            setFormData({ ...formData, banner: url });
+                          }
+                          setUploading(false);
+                        }
+                      }}
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:text-white file:cursor-pointer hover:file:bg-emerald-700"
+                    />
+                    {formData.banner && (
+                      <div className="mt-2">
+                        <img src={formData.banner} alt="Banner Preview" className="w-32 h-16 object-cover rounded-lg" />
                       </div>
                     )}
                   </div>
