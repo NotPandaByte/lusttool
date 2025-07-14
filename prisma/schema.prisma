@@ -9,16 +9,19 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  role          UserRole  @default(WAITING)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id              String           @id @default(cuid())
+  name            String?
+  email           String?          @unique
+  role            UserRole         @default(WAITING)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  supportRequests SupportRequest[]
+  eventsCreated   Event[]          @relation("EventCreator")
+  eventRegistrations EventRegistration[]
 }
 
 model Staff {
@@ -36,6 +39,46 @@ model Staff {
   imageId      String?
   banner       Image?   @relation("StaffBanner", fields: [bannerId], references: [id])
   image        Image?   @relation("StaffImage", fields: [imageId], references: [id])
+  assignedEvents Event[] @relation("EventStaff")
+}
+
+model Event {
+  id            String              @id @default(cuid())
+  title         String
+  description   String
+  date          DateTime
+  time          String
+  location      String
+  type          EventType           @default(REGULAR)
+  capacity      Int
+  price         Float?              @default(0)
+  features      String[]            @default([])
+  status        EventStatus         @default(DRAFT)
+  published     Boolean             @default(false)
+  publishedAt   DateTime?
+  imageId       String?
+  createdById   String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  
+  // Relations
+  createdBy     User                @relation("EventCreator", fields: [createdById], references: [id])
+  image         Image?              @relation("EventImage", fields: [imageId], references: [id])
+  staff         Staff[]             @relation("EventStaff")
+  registrations EventRegistration[]
+}
+
+model EventRegistration {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([eventId, userId])
 }
 
 model Image {
@@ -46,6 +89,26 @@ model Image {
   createdAt    DateTime @default(now())
   staffBanners Staff[]  @relation("StaffBanner")
   staffImages  Staff[]  @relation("StaffImage")
+  events       Event[]  @relation("EventImage")
+}
+
+model SupportRequest {
+  id         String          @id @default(cuid())
+  name       String
+  email      String
+  subject    String
+  message    String
+  type       String
+  userId     String?
+  userRole   UserRole        @default(AUTHENTICATED)
+  priority   SupportPriority @default(NORMAL)
+  status     SupportStatus   @default(OPEN)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  resolvedAt DateTime?
+  assignedTo String?
+  response   String?
+  user       User?           @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -86,4 +149,36 @@ enum UserRole {
   WAITING
   AUTHENTICATED
   REJECTED
+  USER
+  VIP
+  ADMIN
+}
+
+enum EventType {
+  REGULAR
+  PREMIUM
+  ELITE
+  EXCLUSIVE
+}
+
+enum EventStatus {
+  DRAFT
+  PLANNING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum SupportPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum SupportStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
 }
