@@ -22,7 +22,7 @@ export default function StaffAdminPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
-  const [uploading, setUploading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     rank: '',
@@ -76,7 +76,6 @@ export default function StaffAdminPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUploading(true);
 
     try {
       const url = editingStaff ? `/api/staff/${editingStaff.id}` : '/api/staff';
@@ -105,8 +104,6 @@ export default function StaffAdminPage() {
     } catch (error) {
       console.error('Submit error:', error);
       alert(`Error: ${error}`);
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -336,10 +333,9 @@ export default function StaffAdminPage() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       type="submit"
-                      disabled={uploading}
                       className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-800 text-white py-3 px-6 rounded-lg font-medium transition-colors"
                     >
-                      {uploading ? 'Uploading...' : (editingStaff ? 'Update' : 'Create')}
+                      {editingStaff ? 'Update' : 'Create'}
                     </motion.button>
                     <motion.button
                       whileHover={{ scale: 1.02 }}

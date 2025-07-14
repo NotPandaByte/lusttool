@@ -58,14 +58,7 @@ NODE_ENV="production"
    npm start
    ```
 
-## File Uploads
 
-The application stores uploaded files in the `public/` directory:
-- Staff images: `public/staff-images/`
-- Staff models: `public/staff-models/`
-- General uploads: `public/uploads/`
-
-Make sure your hosting platform supports file uploads and has sufficient storage.
 
 ## Security Considerations
 

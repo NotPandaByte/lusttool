@@ -471,7 +471,7 @@ export default function Dashboard() {
   });
   const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [uploading, setUploading] = useState(false);
+
   const [editForm, setEditForm] = useState({
     name: '',
     rank: '',
@@ -723,7 +723,6 @@ export default function Dashboard() {
     e.preventDefault();
     if (!editingStaff) return;
     
-    setUploading(true);
     try {
       const response = await fetch(`/api/staff/${editingStaff.id}`, {
         method: 'PUT',
@@ -746,8 +745,6 @@ export default function Dashboard() {
     } catch (error) {
       console.error('Error updating staff:', error);
       alert('Error updating staff member');
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -1397,17 +1394,9 @@ export default function Dashboard() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           type="submit"
-                          disabled={uploading}
                           className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-800 text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                         >
-                          {uploading ? (
-                            <>
-                              <div className="w-4 h-4 spinner"></div>
-                              <span>Uploading...</span>
-                            </>
-                          ) : (
-                            <span>Update Staff Member</span>
-                          )}
+                          <span>Update Staff Member</span>
                         </motion.button>
                         <motion.button
                           whileHover={{ scale: 1.02 }}
@@ -1435,8 +1424,7 @@ export default function Dashboard() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                           </div>
-                          <p className="text-zinc-400 text-sm">No 3D avatar uploaded</p>
-                          <p className="text-zinc-500 text-xs mt-1">Upload an FBX, GLB, or GLTF file to see it here</p>
+                                                          <p className="text-zinc-400 text-sm">No 3D avatar available</p>
                         </div>
                       )}
                     </div>
