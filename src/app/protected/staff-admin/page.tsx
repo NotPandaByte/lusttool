@@ -316,6 +316,84 @@ export default function StaffAdminPage() {
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-white font-medium mb-2">Profile Image</label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const formDataUpload = new FormData();
+                            formDataUpload.append('image', file);
+                            
+                            try {
+                              const response = await fetch('/api/upload?type=avatar', {
+                                method: 'POST',
+                                body: formDataUpload
+                              });
+                              
+                              if (response.ok) {
+                                const data = await response.json();
+                                setFormData({ ...formData, image: data.url });
+                              } else {
+                                alert('Failed to upload image');
+                              }
+                            } catch (error) {
+                              console.error('Upload error:', error);
+                              alert('Failed to upload image');
+                            }
+                          }
+                        }}
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer hover:file:bg-indigo-700"
+                      />
+                      {formData.image && (
+                        <div className="mt-2">
+                          <img src={formData.image} alt="Preview" className="w-16 h-16 object-cover rounded-lg" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-white font-medium mb-2">Banner Image</label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const formDataUpload = new FormData();
+                            formDataUpload.append('image', file);
+                            
+                            try {
+                              const response = await fetch('/api/upload?type=banner', {
+                                method: 'POST',
+                                body: formDataUpload
+                              });
+                              
+                              if (response.ok) {
+                                const data = await response.json();
+                                setFormData({ ...formData, banner: data.url });
+                              } else {
+                                alert('Failed to upload banner');
+                              }
+                            } catch (error) {
+                              console.error('Upload error:', error);
+                              alert('Failed to upload banner');
+                            }
+                          }
+                        }}
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:text-white file:cursor-pointer hover:file:bg-emerald-700"
+                      />
+                      {formData.banner && (
+                        <div className="mt-2">
+                          <img src={formData.banner} alt="Banner Preview" className="w-32 h-16 object-cover rounded-lg" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
 
 
                   <div>
