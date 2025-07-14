@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -14,52 +8,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  WAITING
-  AUTHENTICATED
-  REJECTED
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime?
-  image         String?
   role          UserRole  @default(WAITING)
-  accounts      Account[]
-  sessions      Session[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model Staff {
-  id          String   @id @default(cuid())
-  name        String
-  position    String?
-  rank        String?
-  description String?
-  imageId     String?
-  bannerId    String?
+  id           String   @id @default(cuid())
+  name         String
+  position     String?
+  description  String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  rank         String?
+  links        String?
   vrchatAvatar String?
-  links       String?
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  image       Image?   @relation("StaffImage", fields: [imageId], references: [id])
-  banner      Image?   @relation("StaffBanner", fields: [bannerId], references: [id])
+  bannerId     String?
+  imageId      String?
+  banner       Image?   @relation("StaffBanner", fields: [bannerId], references: [id])
+  image        Image?   @relation("StaffImage", fields: [imageId], references: [id])
 }
 
 model Image {
-  id          String   @id @default(cuid())
-  data        Bytes
-  mimetype    String
-  filename    String?
-  createdAt   DateTime @default(now())
-  
-  staffImages   Staff[] @relation("StaffImage")
-  staffBanners  Staff[] @relation("StaffBanner")
+  id           String   @id @default(cuid())
+  data         Bytes
+  mimetype     String
+  filename     String?
+  createdAt    DateTime @default(now())
+  staffBanners Staff[]  @relation("StaffBanner")
+  staffImages  Staff[]  @relation("StaffImage")
 }
 
 model Account {
@@ -68,15 +54,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -95,4 +80,10 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum UserRole {
+  WAITING
+  AUTHENTICATED
+  REJECTED
 }
