@@ -77,8 +77,8 @@ export default function TestImagesPage() {
               <li>• Green border = Image loaded successfully</li>
               <li>• Red border = Image failed to load</li>
               <li>• Yellow border = Image is still loading</li>
-              <li>• Click "Show Debug" on any image for detailed information</li>
-              <li>• Try opening the "Open in new tab" links to test direct access</li>
+              <li>• Click &quot;Show Debug&quot; on any image for detailed information</li>
+              <li>• Try opening the &quot;Open in new tab&quot; links to test direct access</li>
             </ul>
           </div>
         </div>

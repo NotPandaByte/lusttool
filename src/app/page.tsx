@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, Transition } from 'framer-motion';
+import { motion, Transition } from 'framer-motion';
 import Link from 'next/link';
 
 const gentleTransition: Transition = {
