@@ -72,25 +72,7 @@ export default function StaffAdminPage() {
     }
   };
 
-  const handleFileUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
 
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        return data.url;
-      }
-    } catch (error) {
-      console.error('Upload error:', error);
-    }
-    return null;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -337,80 +319,7 @@ export default function StaffAdminPage() {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-white font-medium mb-2">Profile Image</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setUploading(true);
-                          const url = await handleFileUpload(file);
-                          if (url) {
-                            setFormData({ ...formData, image: url });
-                          }
-                          setUploading(false);
-                        }
-                      }}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer hover:file:bg-indigo-700"
-                    />
-                    {formData.image && (
-                      <div className="mt-2">
-                        <img src={formData.image} alt="Preview" className="w-16 h-16 object-cover rounded-lg" />
-                      </div>
-                    )}
-                  </div>
 
-                  <div>
-                    <label className="block text-white font-medium mb-2">Banner Image</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setUploading(true);
-                          const url = await handleFileUpload(file);
-                          if (url) {
-                            setFormData({ ...formData, banner: url });
-                          }
-                          setUploading(false);
-                        }
-                      }}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:text-white file:cursor-pointer hover:file:bg-emerald-700"
-                    />
-                    {formData.banner && (
-                      <div className="mt-2">
-                        <img src={formData.banner} alt="Banner Preview" className="w-32 h-16 object-cover rounded-lg" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-white font-medium mb-2">VRChat Avatar (GLB/GLTF/FBX)</label>
-                    <input
-                      type="file"
-                      accept=".glb,.gltf,.fbx"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setUploading(true);
-                          const url = await handleFileUpload(file);
-                          if (url) {
-                            setFormData({ ...formData, vrchatAvatar: url });
-                          }
-                          setUploading(false);
-                        }
-                      }}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:cursor-pointer hover:file:bg-purple-700"
-                    />
-                    {formData.vrchatAvatar && (
-                      <div className="mt-2">
-                        <p className="text-green-400 text-sm">✓ 3D Model uploaded ({formData.vrchatAvatar.split('.').pop()?.toUpperCase()})</p>
-                      </div>
-                    )}
-                  </div>
 
                   <div>
                     <label className="block text-white font-medium mb-2">Display Order</label>

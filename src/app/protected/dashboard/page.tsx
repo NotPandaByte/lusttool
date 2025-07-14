@@ -699,36 +699,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleFileUpload = async (file: File) => {
-    console.log('Starting file upload:', { fileName: file.name, fileSize: file.size });
-    
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Upload successful:', data);
-        console.log('Image URL generated:', data.url);
-        console.log('Full URL would be:', `${window.location.origin}${data.url}`);
-        return data.url;
-      } else {
-        const errorResponse = await response.json();
-        console.error('Upload failed with response:', errorResponse);
-        alert(`Upload error: ${errorResponse.error || 'Unknown error'}`);
-      }
-    } catch (error) {
-      console.error('Upload error:', error);
-      alert(`Upload error: ${error}`);
-    }
-    return null;
-  };
-
   const openEditModal = (staff: Staff) => {
     setEditingStaff(staff);
     setEditForm({
@@ -1052,85 +1022,7 @@ export default function Dashboard() {
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Profile Image</label>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  setUploading(true);
-                                  const url = await handleFileUpload(file);
-                                  if (url) {
-                                    setStaffForm(prev => ({ ...prev, image: url }));
-                                  }
-                                  setUploading(false);
-                                }
-                              }}
-                              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer hover:file:bg-indigo-700 transition-all"
-                            />
-                            {staffForm.image && (
-                              <div className="mt-3">
-                                <ImageDebugger 
-                                  imageUrl={staffForm.image} 
-                                  className="w-16 h-16 object-cover rounded-lg border border-white/20" 
-                                />
-                              </div>
-                            )}
-                          </div>
-                          
-                          <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Banner Image</label>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  setUploading(true);
-                                  const url = await handleFileUpload(file);
-                                  if (url) {
-                                    setStaffForm(prev => ({ ...prev, banner: url }));
-                                  }
-                                  setUploading(false);
-                                }
-                              }}
-                              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:text-white file:cursor-pointer hover:file:bg-emerald-700 transition-all"
-                            />
-                            {staffForm.banner && (
-                              <div className="mt-3">
-                                <img src={staffForm.banner} alt="Banner Preview" className="w-32 h-16 object-cover rounded-lg border border-white/20" />
-                              </div>
-                            )}
-                          </div>
-                          
-                          <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">VRChat Avatar (FBX/GLB/GLTF)</label>
-                            <input
-                              type="file"
-                              accept=".fbx,.glb,.gltf"
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  setUploading(true);
-                                  const url = await handleFileUpload(file);
-                                  if (url) {
-                                    setStaffForm(prev => ({ ...prev, vrchatAvatar: url }));
-                                  }
-                                  setUploading(false);
-                                }
-                              }}
-                              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:cursor-pointer hover:file:bg-purple-700 transition-all"
-                            />
-                            {staffForm.vrchatAvatar && (
-                              <div className="mt-3">
-                                <div className="text-sm text-green-400">✓ VRChat Avatar uploaded</div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
+
                         
                         <div>
                           <label className="block text-sm font-medium text-zinc-300 mb-2">Description</label>
@@ -1487,87 +1379,7 @@ export default function Dashboard() {
                         </div>
                       </div>
 
-                      <div>
-                        <label className="block text-white font-medium mb-2">Profile Image</label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              setUploading(true);
-                              const url = await handleFileUpload(file);
-                              if (url) {
-                                setEditForm({ ...editForm, image: url });
-                              }
-                              setUploading(false);
-                            }
-                          }}
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer hover:file:bg-indigo-700 transition-all"
-                        />
-                        {editForm.image && (
-                          <div className="mt-3">
-                            <img src={editForm.image} alt="Preview" className="w-16 h-16 object-cover rounded-lg border border-white/20" />
-                          </div>
-                        )}
-                      </div>
 
-                      <div>
-                        <label className="block text-white font-medium mb-2">Banner Image</label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              setUploading(true);
-                              const url = await handleFileUpload(file);
-                              if (url) {
-                                setEditForm({ ...editForm, banner: url });
-                              }
-                              setUploading(false);
-                            }
-                          }}
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:text-white file:cursor-pointer hover:file:bg-emerald-700 transition-all"
-                        />
-                        {editForm.banner && (
-                          <div className="mt-3">
-                            <img src={editForm.banner} alt="Banner Preview" className="w-32 h-16 object-cover rounded-lg border border-white/20" />
-                          </div>
-                        )}
-                      </div>
-
-                      <div>
-                        <label className="block text-white font-medium mb-2">VRChat Avatar (FBX/GLB/GLTF)</label>
-                        <input
-                          type="file"
-                          accept=".fbx,.glb,.gltf"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              setUploading(true);
-                              const url = await handleFileUpload(file);
-                              if (url) {
-                                setEditForm({ ...editForm, vrchatAvatar: url });
-                              }
-                              setUploading(false);
-                            }
-                          }}
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:cursor-pointer hover:file:bg-purple-700 transition-all"
-                        />
-                        {editForm.vrchatAvatar && (
-                          <div className="mt-3">
-                            <div className="flex items-center space-x-2">
-                              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                              </svg>
-                              <p className="text-green-400 text-sm">
-                                ✓ 3D Model uploaded ({editForm.vrchatAvatar.split('.').pop()?.toUpperCase()})
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
 
                       <div>
                         <label className="block text-white font-medium mb-2">Display Order</label>
