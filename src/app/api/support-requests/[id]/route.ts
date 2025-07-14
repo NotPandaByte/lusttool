@@ -5,10 +5,14 @@ import { getServerSession } from 'next-auth';
 const prisma = new PrismaClient();
 
 export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest
 ) {
   try {
+    // Extract ID from URL pathname
+    const url = new URL(request.url);
+    const pathSegments = url.pathname.split('/');
+    const id = pathSegments[pathSegments.length - 1];
+    
     const session = await getServerSession();
     
     // Check if user is authenticated and has admin access
@@ -39,7 +43,7 @@ export async function PATCH(
     updateData.updatedAt = new Date();
 
     const updatedRequest = await prisma.supportRequest.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: {
         user: {
