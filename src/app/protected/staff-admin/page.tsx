@@ -321,12 +321,21 @@ export default function StaffAdminPage() {
 
                   <div>
                     <label className="block text-white font-medium mb-2">Rank</label>
-                    <input
-                      type="text"
+                    <select
                       value={formData.rank}
                       onChange={(e) => setFormData({ ...formData, rank: e.target.value })}
                       className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
+                    >
+                      <option value="">Select rank (optional)</option>
+                      <option value="owner">Owner</option>
+                      <option value="dancer">Dancer</option>
+                      <option value="mod">Mod</option>
+                      <option value="admin">Admin</option>
+                      <option value="security">Security</option>
+                      <option value="doors">Doors</option>
+                      <option value="hosts">Hosts</option>
+                      <option value="devs">Devs</option>
+                    </select>
                   </div>
 
                   <div>

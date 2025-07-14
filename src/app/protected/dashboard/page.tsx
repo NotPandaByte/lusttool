@@ -1043,13 +1043,21 @@ export default function Dashboard() {
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-zinc-300 mb-2">Rank</label>
-                            <input
-                              type="text"
+                            <select
                               value={staffForm.rank}
                               onChange={(e) => setStaffForm(prev => ({ ...prev, rank: e.target.value }))}
                               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus-ring animate-smooth"
-                              placeholder="Staff rank (optional)"
-                            />
+                            >
+                              <option value="">Select rank (optional)</option>
+                              <option value="owner">Owner</option>
+                              <option value="dancer">Dancer</option>
+                              <option value="mod">Mod</option>
+                              <option value="admin">Admin</option>
+                              <option value="security">Security</option>
+                              <option value="doors">Doors</option>
+                              <option value="hosts">Hosts</option>
+                              <option value="devs">Devs</option>
+                            </select>
                           </div>
                         </div>
                         
@@ -1434,13 +1442,21 @@ export default function Dashboard() {
 
                       <div>
                         <label className="block text-white font-medium mb-2">Rank</label>
-                        <input
-                          type="text"
+                        <select
                           value={editForm.rank}
                           onChange={(e) => setEditForm({ ...editForm, rank: e.target.value })}
                           className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                          placeholder="e.g., Senior, Lead, etc."
-                        />
+                        >
+                          <option value="">Select rank (optional)</option>
+                          <option value="owner">Owner</option>
+                          <option value="dancer">Dancer</option>
+                          <option value="mod">Mod</option>
+                          <option value="admin">Admin</option>
+                          <option value="security">Security</option>
+                          <option value="doors">Doors</option>
+                          <option value="hosts">Hosts</option>
+                          <option value="devs">Devs</option>
+                        </select>
                       </div>
 
                       <div>
