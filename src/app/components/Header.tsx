@@ -122,27 +122,15 @@ export default function Header() {
           >
             {/* Scrollable Content Container */}
             <div className="relative z-10 flex-1 overflow-y-auto overflow-x-hidden">
-              <div className="min-h-full flex flex-col">
-                {/* Close Button for Mobile */}
-                <div className="flex justify-end p-4 sm:hidden">
-                  <button
-                    onClick={closeMenu}
-                    className="w-10 h-10 bg-black/30 border border-red-800/40 rounded-full flex items-center justify-center text-white hover:bg-red-950/40 transition-all duration-300"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
+              <div className="min-h-full">
                 {/* Content Wrapper */}
-                <div className="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+                <div className="px-4 py-6 sm:py-12">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ delay: 0.1 }}
-                    className="w-full max-w-7xl mx-auto"
+                    className="w-full max-w-6xl mx-auto"
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Menu Header */}
@@ -150,20 +138,20 @@ export default function Header() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
-                      className="text-center mb-8 sm:mb-16"
+                      className="text-center mb-6 sm:mb-12"
                     >
-                      <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 tracking-wide mb-4 sm:mb-6 drop-shadow-lg">
+                      <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-orange-100 tracking-wide mb-3 sm:mb-4 drop-shadow-lg">
                         Navigation
                       </h2>
-                      <p className="text-zinc-300 text-lg sm:text-2xl font-medium drop-shadow-md">
+                      <p className="text-zinc-300 text-sm sm:text-lg lg:text-xl font-medium drop-shadow-md">
                         Explore our world
                       </p>
                     </motion.div>
 
                     {/* Navigation Links - Responsive Grid */}
-                    <div className="space-y-6 sm:space-y-8">
+                    <div className="space-y-5 sm:space-y-8">
                       {/* Main Navigation - Row 1: Home, Events, Gallery (4 per row on large screens) */}
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                         {/* Home */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
@@ -173,9 +161,9 @@ export default function Header() {
                           <Link
                             href="/"
                             onClick={closeMenu}
-                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-3 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                            <div className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
                               <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                               </svg>
@@ -224,12 +212,12 @@ export default function Header() {
                           </Link>
                         </motion.div>
 
-                        {/* Our Staff - Only on large screens in first row */}
+                        {/* Our Staff - Large screens in first row, small mobile next to Gallery */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.35 }}
-                          className="hidden lg:block"
+                          className="hidden sm:hidden lg:block"
                         >
                           <Link
                             href="/staff"
@@ -238,33 +226,51 @@ export default function Header() {
                           >
                             <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
                               <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 715 0z" />
                               </svg>
                             </div>
                             <span className="text-white font-semibold text-sm sm:text-lg lg:text-xl drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
                           </Link>
                         </motion.div>
+
+                        {/* Our Staff - Small mobile only, positioned next to Gallery */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.35 }}
+                          className="block sm:hidden"
+                        >
+                          <Link
+                            href="/staff"
+                            onClick={closeMenu}
+                            className="block p-3 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                          >
+                            <div className="w-10 h-10 mx-auto mb-2 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-5 h-5 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 715 0z" />
+                              </svg>
+                            </div>
+                            <span className="text-white font-semibold text-sm drop-shadow-md group-hover:text-red-100 transition-colors duration-300">Our Staff</span>
+                          </Link>
+                        </motion.div>
                       </div>
 
-                      {/* Main Navigation - Row 2: Our Staff (mobile/tablet), VIPs, Contact - Aligned under Events/Gallery */}
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                        {/* Empty space - aligns with Home */}
-                        <div className="hidden sm:block lg:hidden"></div>
-                        
+                      {/* Main Navigation - Row 2: Our Staff, VIPs, Contact */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                         {/* Our Staff - Mobile and tablet only */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.4 }}
-                          className="lg:hidden"
+                          className="hidden sm:block lg:hidden"
                         >
                           <Link
                             href="/staff"
                             onClick={closeMenu}
-                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-3 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-5 h-5 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                               </svg>
                             </div>
@@ -272,22 +278,20 @@ export default function Header() {
                           </Link>
                         </motion.div>
 
-                        {/* Empty space - aligns VIPs under Events */}
-                        <div className="hidden lg:block"></div>
-
-                        {/* VIPs - Positioned under Events */}
+                        {/* VIPs */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.45 }}
+                          className="col-start-1 sm:col-start-2 lg:col-start-2"
                         >
                           <Link
                             href="/vips"
                             onClick={closeMenu}
-                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-3 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-5 h-5 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-orange-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                               </svg>
                             </div>
@@ -295,19 +299,20 @@ export default function Header() {
                           </Link>
                         </motion.div>
 
-                        {/* Contact - Positioned under Gallery */}
+                        {/* Contact */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.5 }}
+                          className="col-start-2 sm:col-start-3 lg:col-start-3"
                         >
                           <Link
                             href="/contact"
                             onClick={closeMenu}
-                            className="block p-4 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
+                            className="block p-3 sm:p-6 lg:p-8 text-center group hover:bg-red-950/20 rounded-xl transition-all duration-300 border border-red-900/30 hover:border-red-700/50 backdrop-blur-sm"
                           >
-                            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
-                              <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-4 bg-red-950/30 border border-red-800/40 rounded-full flex items-center justify-center group-hover:bg-red-900/40 group-hover:border-orange-600/50 transition-all duration-300 shadow-xl">
+                              <svg className="w-5 h-5 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-300 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                               </svg>
                             </div>
@@ -317,8 +322,8 @@ export default function Header() {
                       </div>
 
                                              {/* Smaller Secondary Navigation - Terms, Privacy, About */}
-                       <div className="mt-8 pt-6 border-t border-red-900/20">
-                         <div className="text-center mb-4">
+                       <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-red-900/20">
+                         <div className="text-center mb-3 sm:mb-4">
                            <p className="text-zinc-400 text-xs sm:text-sm font-medium">Legal & Information</p>
                          </div>
                          <div className="flex justify-center">
