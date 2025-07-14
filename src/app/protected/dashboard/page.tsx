@@ -699,8 +699,8 @@ export default function Dashboard() {
     }
   };
 
-  const handleFileUpload = async (file: File, type: 'image' | 'model', category: string = 'staff') => {
-    console.log('Starting file upload:', { fileName: file.name, fileSize: file.size, type, category });
+  const handleFileUpload = async (file: File) => {
+    console.log('Starting file upload:', { fileName: file.name, fileSize: file.size });
     
     const formData = new FormData();
     formData.append('file', file);

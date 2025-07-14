@@ -72,7 +72,7 @@ export default function StaffAdminPage() {
     }
   };
 
-  const handleFileUpload = async (file: File, type: 'image' | 'model') => {
+  const handleFileUpload = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -346,7 +346,7 @@ export default function StaffAdminPage() {
                         const file = e.target.files?.[0];
                         if (file) {
                           setUploading(true);
-                          const url = await handleFileUpload(file, 'image');
+                          const url = await handleFileUpload(file);
                           if (url) {
                             setFormData({ ...formData, image: url });
                           }
@@ -371,7 +371,7 @@ export default function StaffAdminPage() {
                         const file = e.target.files?.[0];
                         if (file) {
                           setUploading(true);
-                          const url = await handleFileUpload(file, 'image');
+                          const url = await handleFileUpload(file);
                           if (url) {
                             setFormData({ ...formData, banner: url });
                           }
@@ -396,7 +396,7 @@ export default function StaffAdminPage() {
                         const file = e.target.files?.[0];
                         if (file) {
                           setUploading(true);
-                          const url = await handleFileUpload(file, 'model');
+                          const url = await handleFileUpload(file);
                           if (url) {
                             setFormData({ ...formData, vrchatAvatar: url });
                           }

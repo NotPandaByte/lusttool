@@ -17,7 +17,7 @@ interface ImageGalleryProps {
   maxSelection?: number;
 }
 
-export function ImageGallery({ onImageSelect, category = 'general', maxSelection = 1 }: ImageGalleryProps) {
+export function ImageGallery({ onImageSelect, maxSelection = 1 }: ImageGalleryProps) {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
