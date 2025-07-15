@@ -153,7 +153,7 @@ export default function Home() {
                   
                   {/* Main text with elegant gradient */}
                   <span className="bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent">
-                    <AnimatedText text="Laced in Lust" delay={0.5} />
+                    <AnimatedText text="𝐋𝐚𝐜𝐞𝐝 𝐈𝐧 𝐋𝐮𝐬𝐭" delay={0.5} />
                   </span>
                 </h1>
 
