@@ -142,7 +142,7 @@ export default function Home() {
                 transition={{ delay: 0.2, duration: 1, type: "spring", stiffness: 200 }}
                 className="relative"
               >
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter leading-none relative">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter leading-none relative font-playfair-display">
                   {/* Glow effect behind text */}
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -152,8 +152,8 @@ export default function Home() {
                   />
                   
                   {/* Main text with elegant gradient */}
-                  <span className="bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent">
-                    <AnimatedText text="𝐋𝐚𝐜𝐞𝐝 𝐈𝐧 𝐋𝐮𝐬𝐭" delay={0.5} />
+                  <span className="bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent font-black tracking-tight">
+                    <AnimatedText text="Laced In Lust" delay={0.5} />
                   </span>
                 </h1>
 
