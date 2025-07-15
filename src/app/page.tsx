@@ -179,68 +179,25 @@ export default function Home() {
                 Pleasure’s the poison...
               </p>
             </motion.div>
-            {/* Spiced up "Club Lust" below the subtitle */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 3, duration: 1, type: "spring", stiffness: 180 }}
-              className="mb-16 flex justify-center"
-            >
-              <span className="relative inline-block px-8 py-2 text-4xl md:text-6xl font-extrabold tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display">
-                <span className="absolute -inset-1 blur-2xl opacity-40 bg-gradient-to-r from-red-700 via-pink-500 to-orange-500 rounded-lg -z-10"></span>
-                CLUB&nbsp;LUST
-              </span>
-            </motion.div>
+                         {/* Spiced up "Club Lust" - Now the main navigation button */}
+             <motion.div
+               initial={{ opacity: 0, scale: 0.8, y: 20 }}
+               animate={{ opacity: 1, scale: 1, y: 0 }}
+               transition={{ delay: 3, duration: 1, type: "spring", stiffness: 180 }}
+               className="mb-16 flex justify-center"
+             >
+               <motion.button
+                 onClick={handleOpenMenu}
+                 whileHover={{ scale: 1.05, y: -3 }}
+                 whileTap={{ scale: 0.95 }}
+                 className="relative inline-block px-8 py-2 text-4xl md:text-6xl font-extrabold tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display cursor-pointer transition-all duration-300 hover:animate-none"
+               >
+                 <span className="absolute -inset-1 blur-2xl opacity-40 bg-gradient-to-r from-red-700 via-pink-500 to-orange-500 rounded-lg -z-10 group-hover:opacity-60 transition-opacity"></span>
+                 CLUB&nbsp;LUST
+               </motion.button>
+             </motion.div>
 
-            {/* Single CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 3, ...gentleTransition }}
-              className="flex items-center justify-center"
-            >
-              <motion.button
-                onClick={handleOpenMenu}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-12 py-6 bg-gradient-to-r from-red-700 to-red-800 text-white rounded-2xl font-bold text-xl shadow-2xl overflow-hidden border border-red-600/50"
-              >
-                {/* Button glow effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-30 transition-opacity duration-300"
-                  animate={{
-                    background: [
-                      "linear-gradient(45deg, #dc2626, #ea580c)",
-                      "linear-gradient(225deg, #ea580c, #dc2626)",
-                      "linear-gradient(45deg, #dc2626, #ea580c)",
-                    ]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                
-                {/* Shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={false}
-                  whileHover={{ x: "200%" }}
-                  transition={{ duration: 0.8 }}
-                />
-                
-                <span className="relative z-10 flex items-center gap-4">
-                  Enter Club Lust
-                  <motion.svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    whileHover={{ x: 3 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </motion.svg>
-                </span>
-              </motion.button>
-            </motion.div>
+
            </div>
         </div>
       </div>
