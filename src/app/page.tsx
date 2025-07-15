@@ -175,10 +175,7 @@ export default function Home() {
               className="mb-16"
             >
               <p className="text-xl md:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto">
-                Where passion meets rhythm, and every night becomes an{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 font-medium">
-                  unforgettable experience
-                </span>
+              Come one come all, this shows a must; pleasures the poison at Club Lust.
               </p>
             </motion.div>
 
@@ -217,7 +214,7 @@ export default function Home() {
                 />
                 
                 <span className="relative z-10 flex items-center gap-4">
-                  Enter the Experience
+                  Enter Club Lust
                   <motion.svg
                     className="w-6 h-6"
                     fill="none"
