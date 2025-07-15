@@ -42,7 +42,11 @@ const FloatingParticles = () => {
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; delay: number }>>([]);
 
   useEffect(() => {
-    const newParticles = Array.from({ length: 15 }, (_, i) => ({
+    // Reduce particles on mobile for better performance
+    const isMobile = window.innerWidth < 640;
+    const particleCount = isMobile ? 8 : 15;
+    
+    const newParticles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -105,7 +109,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section - Full Screen */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-screen overflow-hidden min-h-[600px] sm:min-h-screen">
         {/* Video Background */}
         <div className="absolute inset-0">
           <video
@@ -132,17 +136,17 @@ export default function Home() {
 
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center h-full">
-          <div className="text-center max-w-7xl mx-auto px-4">
+          <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             {/* Main Title with Advanced Animation */}
-            <div className="mb-12">
+            <div className="mb-8 sm:mb-12">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 1, type: "spring", stiffness: 200 }}
                 className="relative"
               >
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter leading-none relative font-playfair-display">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-6 sm:mb-8 tracking-tighter leading-none relative font-playfair-display">
                   {/* Glow effect behind text */}
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -152,7 +156,7 @@ export default function Home() {
                   />
                   
                   {/* Main text with elegant gradient */}
-                  <span className="bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent font-black tracking-tight">
+                  <span className="bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent font-extrabold tracking-widest">
                     <AnimatedText text="Laced In Lust" delay={0.5} />
                   </span>
                 </h1>
@@ -162,7 +166,7 @@ export default function Home() {
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 2, duration: 1.5, ease: "easeOut" }}
-                  className="h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent mx-auto w-80 rounded-full"
+                  className="h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent mx-auto w-48 sm:w-60 md:w-80 rounded-full"
                 />
               </motion.div>
             </div>
@@ -172,11 +176,11 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, ...gentleTransition }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
-              <p className="text-xl md:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto">
-                Come one, come all—this show’s a must.<br />
-                Pleasure’s the poison...
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto px-2 sm:px-0">
+                Come one, come all—this show's a must.<br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>Pleasure's the poison...
               </p>
             </motion.div>
                          {/* Spiced up "Club Lust" - Now the main navigation button */}
@@ -184,13 +188,13 @@ export default function Home() {
                initial={{ opacity: 0, scale: 0.8, y: 20 }}
                animate={{ opacity: 1, scale: 1, y: 0 }}
                transition={{ delay: 3, duration: 1, type: "spring", stiffness: 180 }}
-               className="mb-16 flex justify-center"
+               className="mb-12 sm:mb-16 flex justify-center"
              >
                <motion.button
                  onClick={handleOpenMenu}
                  whileHover={{ scale: 1.05, y: -3 }}
                  whileTap={{ scale: 0.95 }}
-                 className="relative inline-block px-8 py-2 text-4xl md:text-6xl font-extrabold tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display cursor-pointer transition-all duration-300 hover:animate-none"
+                 className="relative inline-block px-4 sm:px-6 md:px-8 py-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-wider sm:tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display cursor-pointer transition-all duration-300 hover:animate-none"
                >
                  <span className="absolute -inset-1 blur-2xl opacity-40 bg-gradient-to-r from-red-700 via-pink-500 to-orange-500 rounded-lg -z-10 group-hover:opacity-60 transition-opacity"></span>
                  CLUB&nbsp;LUST
