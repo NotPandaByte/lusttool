@@ -172,11 +172,25 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, ...gentleTransition }}
-              className="mb-16"
+              className="mb-8"
             >
               <p className="text-xl md:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto">
-              Come one, come all—this show’s a must. Pleasure’s the poison at Club Lust.
+                Come one, come all—this show’s a must.<br />
+                Pleasure’s the poison...
               </p>
+            </motion.div>
+            {/* Spiced up "Club Lust" below the subtitle */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 3, duration: 1, type: "spring", stiffness: 180 }}
+              className="mb-16 flex justify-center"
+            >
+              <span className="relative inline-block px-8 py-2 text-4xl md:text-6xl font-extrabold tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display">
+                <span className="absolute -inset-1 blur-2xl opacity-40 bg-gradient-to-r from-red-700 via-pink-500 to-orange-500 rounded-lg -z-10"></span>
+                CLUB&nbsp;LUST
+                <span className="absolute right-0 top-1/2 -translate-y-1/2 text-pink-300 text-2xl animate-bounce">💋</span>
+              </span>
             </motion.div>
 
             {/* Single CTA Button */}
