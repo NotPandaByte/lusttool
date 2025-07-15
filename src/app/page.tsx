@@ -179,8 +179,8 @@ export default function Home() {
               className="mb-6 sm:mb-8"
             >
               <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto px-2 sm:px-0">
-                Come one, come all—this show's a must.<br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>Pleasure's the poison...
+                Come one, come all—this show&apos;s a must.<br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>Pleasure&apos;s the poison...
               </p>
             </motion.div>
                          {/* Spiced up "Club Lust" - Now the main navigation button */}
