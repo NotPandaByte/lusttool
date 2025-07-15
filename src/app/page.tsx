@@ -175,7 +175,7 @@ export default function Home() {
               className="mb-16"
             >
               <p className="text-xl md:text-3xl text-zinc-300 leading-relaxed font-light max-w-4xl mx-auto">
-              Come one come all, this shows a must; pleasures the poison at Club Lust.
+              Come one, come all—this show’s a must. Pleasure’s the poison at Club Lust.
               </p>
             </motion.div>
 
