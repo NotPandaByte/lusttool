@@ -189,7 +189,6 @@ export default function Home() {
               <span className="relative inline-block px-8 py-2 text-4xl md:text-6xl font-extrabold tracking-widest text-transparent bg-gradient-to-r from-red-500 via-pink-400 to-orange-400 bg-clip-text drop-shadow-lg animate-pulse font-playfair-display">
                 <span className="absolute -inset-1 blur-2xl opacity-40 bg-gradient-to-r from-red-700 via-pink-500 to-orange-500 rounded-lg -z-10"></span>
                 CLUB&nbsp;LUST
-                <span className="absolute right-0 top-1/2 -translate-y-1/2 text-pink-300 text-2xl animate-bounce">💋</span>
               </span>
             </motion.div>
 
